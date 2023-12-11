@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 public class Leave_Applied {
 	@Id
 	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name="leave_start")
@@ -38,7 +38,7 @@ public class Leave_Applied {
 	@ManyToOne
 	@JoinColumn(name="leave_type_id")//this one should be other names, id might cause some errors with the PK
 	//preferable name are the combination of entity name and primary key(eg.leave_type_id)
-	private Leave_Type leave_type;
+	private Leave_Type leavetype;
 	
 	@ManyToOne 
 	@JoinColumn(name="staff_id")//the same goes for this one as well
@@ -96,6 +96,22 @@ public class Leave_Applied {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public Leave_Type getLeavetype() {
+		return leavetype;
+	}
+
+	public void setLeavetype(Leave_Type leave_type) {
+		this.leavetype = leave_type;
+	}
+
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
 	}
 
 
