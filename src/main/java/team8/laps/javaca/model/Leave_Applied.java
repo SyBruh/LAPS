@@ -19,9 +19,6 @@ public class Leave_Applied {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(name="leave_type_id")
-	private int leave_type_id;
-	
 	@Column(name="leave_start")
 	private Date leave_start;
 	
@@ -31,9 +28,6 @@ public class Leave_Applied {
 	@Column(name="date_applied")
 	private Date date_applied;
 	
-	@Column(name="staff_id")
-	private int staff_id;
-	
 	@Column(name="status")
 	private String status;
 	
@@ -42,11 +36,11 @@ public class Leave_Applied {
 	
 	//Mappings
 	@ManyToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="Leave_Type_id")
 	private Leave_Type leave_type;
 	
 	@ManyToOne 
-	@JoinColumn(name="id")
+	@JoinColumn(name="Staff_id")
 	private Staff staff;
 	
 	//Constructors
@@ -56,11 +50,9 @@ public class Leave_Applied {
 			String status, String comment) {
 		super();
 		this.id = id;
-		this.leave_type_id = leave_type_id;
 		this.leave_start = leave_start;
 		this.leave_end = leave_end;
 		this.date_applied = date_applied;
-		this.staff_id = staff_id;
 		this.status = status;
 		this.comment = comment;
 	}
@@ -68,13 +60,6 @@ public class Leave_Applied {
 	//Getters and setters
 	public int getId() {
 		return id;
-	}
-	
-	public int getLeave_type_id() {
-		return leave_type_id;
-	}
-	public void setLeave_type_id(int leave_type_id) {
-		this.leave_type_id = leave_type_id;
 	}
 	
 	public Date getLeave_start() {
@@ -98,17 +83,10 @@ public class Leave_Applied {
 		this.date_applied = date_applied;
 	}
 	
-	public int getStaff_id() {
-		return staff_id;
-	}
-	public void setStaff_id(int staff_id) {
-		this.staff_id = staff_id;
-	}
-	
-	private String getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	private void setStatus(String status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	
@@ -117,10 +95,5 @@ public class Leave_Applied {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
-	}
-
-
-	
-
-	
+	}	
 }
