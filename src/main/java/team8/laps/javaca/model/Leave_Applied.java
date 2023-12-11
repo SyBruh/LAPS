@@ -17,8 +17,8 @@ public class Leave_Applied {
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
+	private int id;	
+
 	@Column(name="leave_start")
 	private Date leave_start;
 	
@@ -47,7 +47,7 @@ public class Leave_Applied {
 	public Leave_Applied() {}
 	
 	public Leave_Applied(int id, int leave_type_id, Date leave_start, Date leave_end, Date date_applied, int staff_id,
-			String status, String comment) {
+			String status, String comment) {//change some arguments ids are not necessary since we will auto-gen them
 		super();
 		this.id = id;
 		this.leave_start = leave_start;
@@ -83,7 +83,7 @@ public class Leave_Applied {
 		this.date_applied = date_applied;
 	}
 	
-	public String getStatus() {
+	public String getStatus() {//public
 		return status;
 	}
 	public void setStatus(String status) {
