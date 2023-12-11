@@ -47,7 +47,7 @@ public class Leave_Applied {
 	public Leave_Applied() {}
 	
 	public Leave_Applied(int id, int leave_type_id, Date leave_start, Date leave_end, Date date_applied, int staff_id,
-			String status, String comment) {//change some arguments ids are not necessary since we will auto-gen them
+			String status, String comment) {
 		super();
 		this.id = id;
 		this.leave_start = leave_start;
