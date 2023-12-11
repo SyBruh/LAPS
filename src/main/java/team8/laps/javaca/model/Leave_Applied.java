@@ -19,9 +19,6 @@ public class Leave_Applied {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(name="leave_type_id")//This one is not needed, since jpa will create one on it's own
-	private int leave_type_id;//Same
-	
 	@Column(name="leave_start")
 	private Date leave_start;
 	
@@ -31,9 +28,6 @@ public class Leave_Applied {
 	@Column(name="date_applied")
 	private Date date_applied;
 	
-	@Column(name="staff_id")//The same goes for this one as well
-	private int staff_id;//Same
-	
 	@Column(name="status")
 	private String status;
 	
@@ -42,26 +36,24 @@ public class Leave_Applied {
 	
 	//Mappings
 	@ManyToOne
-	@JoinColumn(name="id")//this one should be other names, id might cause some errors with the PK
+	@JoinColumn(name="leave_type_id")//this one should be other names, id might cause some errors with the PK
 	//preferable name are the combination of entity name and primary key(eg.leave_type_id)
 	private Leave_Type leave_type;
 	
 	@ManyToOne 
-	@JoinColumn(name="id")//the same goes for this one as well
+	@JoinColumn(name="staff_id")//the same goes for this one as well
 	private Staff staff;
 	
 	//Constructors
 	public Leave_Applied() {}
 	
-	public Leave_Applied(int id, int leave_type_id, Date leave_start, Date leave_end, Date date_applied, int staff_id,
+	public Leave_Applied(int id,Date leave_start, Date leave_end, Date date_applied,
 			String status, String comment) {//change some arguments ids are not necessary since we will auto-gen them
 		super();
 		this.id = id;
-		this.leave_type_id = leave_type_id;//Instead of this(this.leave_type = leave_type)
 		this.leave_start = leave_start;
 		this.leave_end = leave_end;
 		this.date_applied = date_applied;
-		this.staff_id = staff_id;//Instead of this(this.staff = staff)
 		this.status = status;
 		this.comment = comment;
 	}
@@ -69,15 +61,7 @@ public class Leave_Applied {
 	//Getters and setters
 	public int getId() {
 		return id;
-	}
-	
-	public int getLeave_type_id() {
-		return leave_type_id;
-	}
-	public void setLeave_type_id(int leave_type_id) {
-		this.leave_type_id = leave_type_id;
-	}
-	
+	}	
 	public Date getLeave_start() {
 		return leave_start;
 	}
@@ -99,17 +83,11 @@ public class Leave_Applied {
 		this.date_applied = date_applied;
 	}
 	
-	public int getStaff_id() {
-		return staff_id;
-	}
-	public void setStaff_id(int staff_id) {
-		this.staff_id = staff_id;
-	}
 	
-	private String getStatus() {//public
+	public String getStatus() {//public
 		return status;
 	}
-	private void setStatus(String status) {//public
+	public void setStatus(String status) {//public
 		this.status = status;
 	}
 	
