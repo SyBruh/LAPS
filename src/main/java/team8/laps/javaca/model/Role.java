@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -14,7 +15,8 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String role;
-	@OneToMany(mappedBy = "role")
+	
+	@ManyToMany(mappedBy = "roles")
 	private List<User> users;
 	
 	public Role() {

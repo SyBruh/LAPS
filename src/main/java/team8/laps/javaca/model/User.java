@@ -1,10 +1,14 @@
 package team8.laps.javaca.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
@@ -17,9 +21,11 @@ public class User {
 	private String user_name; 
 	private String password; 
 
-	@ManyToOne
-	@JoinColumn(name="role_id")
-	private Role role;
+	@ManyToMany
+	@JoinTable(name = "User_Role",
+	joinColumns = @JoinColumn(name = "user_id"),
+	inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private List<Role> roles;
 
 	@OneToOne(mappedBy ="user")
 	private Staff staff;
@@ -56,14 +62,14 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public Role getRole() {
-		return role;
+	public List<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
-	} 
+	
 }
 //as aaa
 
