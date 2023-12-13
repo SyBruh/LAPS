@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import team8.laps.javaca.interfacemethods.LeaveAppliedService;
 import team8.laps.javaca.model.Leave_Applied;
 import team8.laps.javaca.repository.LeaveAppliedRepository;
 
