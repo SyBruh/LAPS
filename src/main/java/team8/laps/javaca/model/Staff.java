@@ -38,9 +38,11 @@ public class Staff {
 	public Staff() {
 		
 	}
-	public Staff(String staff_name, String designation) {
+	public Staff(String staff_name, String designation, User user, Staff manager) {
 		this.staff_name = staff_name;
 		this.designation = designation;
+		this.user = user;
+		this.manager = manager;
 	}
 	public int getId() {
 		return id;

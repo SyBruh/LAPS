@@ -35,18 +35,19 @@ public class Leave_Applied {
 	private String comment;
 	
 	//Mappings
-	@ManyToOne
-	@JoinColumn(name="Leave_Type_id")
-	private Leave_Type leave_type;
+	@ManyToOne 
+	@JoinColumn(name="leave_type_id")
+	private Leave_Type leavetype;
 	
 	@ManyToOne 
-	@JoinColumn(name="Staff_id")
+	@JoinColumn(name="staff_id")
 	private Staff staff;
 	
 	//Constructors
 	public Leave_Applied() {}
 	
-	public Leave_Applied(int id, int leave_type_id, Date leave_start, Date leave_end, Date date_applied, int staff_id,
+
+	public Leave_Applied(int id,Date leave_start, Date leave_end, Date date_applied,
 			String status, String comment) {
 		super();
 		this.id = id;
@@ -61,7 +62,7 @@ public class Leave_Applied {
 	public int getId() {
 		return id;
 	}
-	
+
 	public Date getLeave_start() {
 		return leave_start;
 	}
@@ -83,9 +84,10 @@ public class Leave_Applied {
 		this.date_applied = date_applied;
 	}
 	
-	public String getStatus() {//public
+	public String getStatus() {
 		return status;
 	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
@@ -95,5 +97,23 @@ public class Leave_Applied {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+
 	}	
+
+	public Leave_Type getLeavetype() {
+		return leavetype;
+	}
+
+	public void setLeavetype(Leave_Type leave_type) {
+		this.leavetype = leave_type;
+	}
+
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
+	}
+
 }
