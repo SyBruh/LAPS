@@ -13,12 +13,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+
 @Table(name="StaffLeaveType")
 public class Staff_Leave_Type {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int Id;
+	private int id;
 	private int leave_entitle;
 	private int leave_balance;
 	
@@ -36,14 +37,19 @@ public class Staff_Leave_Type {
 	public Staff_Leave_Type() {
 		
 	}
-	//Constructor in case
-	public Staff_Leave_Type(int leave_entitle,int leave_balance) {
-		this.setLeave_balance(leave_balance);
-		this.setLeave_entitle(leave_entitle);
-	}
-	
 	
 	//Getter and Setter
+
+	public Staff_Leave_Type(int leave_entitle, int leave_balance, Staff staff, Leave_Type leavetype) {
+		this.leave_entitle = leave_entitle;
+		this.leave_balance = leave_balance;
+		this.staff = staff;
+		this.leavetype = leavetype;
+	}
+	public int getId() {
+		return id;
+	}
+
 	public int getLeave_entitle() {
 		return leave_entitle;
 	}
