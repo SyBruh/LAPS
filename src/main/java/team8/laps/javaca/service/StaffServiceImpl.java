@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import team8.laps.javaca.model.Leave_Applied;
+import jakarta.transaction.Transactional;
 import org.springframework.transaction.annotation.Transactional;
 
 import team8.laps.javaca.interfacemethods.StaffService;
@@ -14,14 +16,21 @@ import team8.laps.javaca.repository.StaffRepository;
 @Transactional(readOnly=true)
 public class StaffServiceImpl implements StaffService{
 
-	@Autowired
-	private StaffRepository staffRepo;
+  @Autowired
+	private StaffRepository staffrepository;
+
 	
 	@Override
 	public List<Staff> findStaffByManagerId(int id) {
 		
-		return staffRepo.findStaffByManagerId(id);
+		return staffrepository.findStaffByManagerId(id);
 	}
-	
+		
+	@Override
+	@Transactional
+	public List<Leave_Applied> getLeaveHistory(int id) {
+		// TODO Auto-generated method stub
+		return staffrepository.findLeaveByStaffId(id);
+	}
 
 }

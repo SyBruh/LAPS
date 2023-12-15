@@ -1,1 +1,25 @@
-//Admin
+<!--userList-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+	<h3>User List</h3>
+	<table>
+	    <thead>
+	      <tr>
+	        <th>Name</th>
+	        <th>Role</th>
+	        <th>Password</th>
+	        <th></th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr th:each="user:${users}">
+	        <td th:text="${user.user_name}"></td>
+	        <td th:text="${user.role}"></td>
+	        <td th:text="${user.password}"></td>
+	        <td><button th:href="@{/updateUser}" >Update User</button></td>
+	    </tbody>
+  	</table>	
+</body>
+</html>

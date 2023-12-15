@@ -1,1 +1,44 @@
-//Admin
+<!--updateUser-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+		<h3>Update User</h3>
+	<form action="#" th:action="@{/updateUser}"
+		th:object="${updateUser}" method="post">
+		<table>
+			<tbody>
+				<tr>
+					<td><span th:text="Name"></span>Name: </td>
+				</tr>
+				<tr>
+					<td>
+						<div style="display: flex; align-items: center;">
+						<label>User Type: </label>
+						  <select name="role_id" id="role_id" th:field="*{role_id}">
+							<option value="">--Select Role Type--</option>
+							<option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.role}"></option>
+						  </select>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span th:text="password"></span>
+						<div style="display: grid; grid-template-columns: 1fr 3fr;">
+							<label>Password:</label>
+							<input type="text" th:value="*{password}" th:field="*{password}" />
+						</div>
+					</td>					
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" value="Update User" class="updateuser"/>
+						<input type="reset" value="Reset" class="updateuser"/>
+					</td>
+				</tr>			
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>
