@@ -1,2 +1,55 @@
 //Staff
 //Manager Can Also View This but some functions must be removed
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<title>Leave History List</title>
+</head>
+
+<body>
+	<br />
+	<h2 style="text-align: center;">History Result</h2>
+	<h3 style="text-align: center;" th:if="${#lists.isEmpty(leaveList)}">No Results.</h3>
+	<table th:if="${not #lists.isEmpty(leaveList)}" style="width:50%; margin-left: auto; margin-right: auto;">
+		<tr>
+			<th>Id</th>
+			<th>Applied Date</th>
+			<th>Start Date</th>
+			<th>End Date</th>
+			<th>Status</th>
+			<th>Comment</th>
+			<th>Leave Type</th>
+		</tr>
+		<tr th:each="Leave_Applied:${leaveList}">
+			<td th:text="${Leave_Applied.getId()}">Id</td>
+			<td><a th:text="${Leave_Applied.getDate_applied()}">Name</a></td>
+			<td th:text="${Leave_Applied.getLeave_start()}">Category</td>
+			<td th:text="${Leave_Applied.getLeave_end()}">Description</td>
+			<td th:text="${Leave_Applied.getStatus()}">Category</td>
+			<td th:text="${Leave_Applied.getComment()}">Description</td>
+			<td th:text="${Leave_Applied.getLeavetype().getLeaveType()}">LeaveType</td>
+			<td><a href="leaveDetail.html" th:href="@{/staff/viewDetail/}+${Leave_Applied.getId()}">Detail</a></td>
+		</tr>
+		</tr>
+	</table>
+	<table style="width:50%; margin-left: auto; margin-right: auto; border:white;">
+		<tr>
+		</tr>
+		<tr>
+			<td style="text-align: center; font-weight: bold;"><a href="#"
+					onclick="history.go(-1); return false;">Back</a></td>
+		</tr>
+	</table>
+</body>
+</div>
+
+</html>

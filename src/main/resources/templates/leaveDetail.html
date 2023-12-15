@@ -1,3 +1,86 @@
 //Staff
-//Manager can also see but he cannot cancel or do any changes to the leave application 
+//Manager can also see but he cannot cancel or do any changes to the leave application
 //but he can approve or reject and add comment so we will have to change some buttons access
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Leave Detail</title>
+</head>
+
+<body>
+	<!-- Header -->
+	<header id="header">
+		<a href="/" class="logo">LAPS</a>
+	</header>
+	<br />
+	<br />
+	<h2 style="text-align: center"> Product Details</h2>
+	<form action="#" th:object="${Leave}" method="post">
+		<table style="width:50%; margin-left: auto; margin-right: auto;">
+			<tr>
+				<!--grey-->
+			</tr>
+			<tr>
+				<th><input type="hidden" th:field="*{id}" th:value="*{getId()}" readonly>Date Applied:
+				</th>
+				<td><input type="text" th:field="*{date_applied}" th:value="*{getDate_applied()}" readonly></td>
+			</tr>
+			<tr>
+				<!--grey-->
+			</tr>
+			<tr>
+				<th>Start Date</th>
+				<td><input type="text" th:field="*{leave_start}" th:value="*{getLeave_start()}" readonly></td>
+			</tr>
+			<tr>
+				<!--grey-->
+			</tr>
+			<tr>
+				<!--grey-->
+			</tr>
+			<tr>
+				<th>End Date</th>
+				<td><input type="text" th:field="*{leave_end}" th:value="*{getLeave_end()}" readonly></td>
+			</tr>
+			<tr>
+				<!--grey-->
+			</tr>
+			<tr>
+				<th>Status</th>
+				<td><input type="text" th:field="*{status}" th:value="*{getStatus()}" readonly></td>
+			</tr>
+			<tr>
+				<th>Comment</th>
+				<td><input type="text" th:field="*{comment}" th:value="*{getComment()}" readonly></td>
+			</tr>
+			<tr>
+				<th>Leave Type</th>
+				<td><input type="text" th:field="*{leavetype.LeaveType}" th:value="*{getLeavetype().getLeaveType()}"
+						readonly></td>
+			</tr>
+			<tr>
+				<!--grey-->
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+					<input type="submit" value="Confirm Deletion" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	<table style="width:50%; margin-left: auto; margin-right: auto; border:
+white;">
+		<tr>
+		</tr>
+		<tr>
+			<td style="text-align: center; font-weight: bold;"><a href="#"
+					onclick="history.go(-1); return false;">Back</a></td>
+		</tr>
+	</table>
+	<br />
+</body>
+
+</html>
