@@ -29,7 +29,7 @@ public class Leave_Applied {
 	private Date date_applied;
 	
 	@Column(name="status")
-	private String status;
+	private LeaveStatusEnum status;
 	
 	@Column(name="comment")
 	private String comment;
@@ -48,7 +48,7 @@ public class Leave_Applied {
 	
 
 	public Leave_Applied(int id,Date leave_start, Date leave_end, Date date_applied,
-			String status, String comment) {
+			LeaveStatusEnum status, String comment) {
 		super();
 		this.id = id;
 		this.leave_start = leave_start;
@@ -84,12 +84,12 @@ public class Leave_Applied {
 		this.date_applied = date_applied;
 	}
 	
-	public String getStatus() {
+	public LeaveStatusEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatus(LeaveStatusEnum submitted) {
+		this.status = submitted;
 	}
 	
 	public String getComment() {

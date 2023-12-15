@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import team8.laps.javaca.model.LeaveStatusEnum;
 import team8.laps.javaca.model.Leave_Applied;
 import team8.laps.javaca.service.LeaveAppliedServiceImpl;
 
@@ -49,7 +50,7 @@ public class StaffController {
 	 * submitLeave.html page
 	 */
 	
-	//Bind submit leave form model
+	//Bind Leave_Applied object to form model
 	@GetMapping("/submitLeave")
 	public String submitLeaveForm(Model model) 
 	{
@@ -61,6 +62,8 @@ public class StaffController {
 	//POST submit leave
 	@PostMapping("/submitLeave")
 	public String createSubmitLeave(@ModelAttribute("leaveApplied")Leave_Applied leave_applied){
+		//Setting leave status using LeaveStausEnum
+		leave_applied.setStatus(LeaveStatusEnum.Submitted);
 		leaveAppliedServiceImpl.createLeave(leave_applied);
 		return "redirect:/staff";
 	}	
