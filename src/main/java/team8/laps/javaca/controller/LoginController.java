@@ -20,16 +20,16 @@ public class LoginController {
 		return "";
 	}
 	
-	@PostMapping("/manager")
+	@GetMapping("/manager")
 	public String managerlogin()
 	{
-		return "";
+		return "manager";
 	}
 	
-	@PostMapping("/admin")
+	@GetMapping("/admin")
 	public String adminlogin()
 	{
-		return "";
+		return "admin";
 	}
 
 }
