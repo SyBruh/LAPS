@@ -4,18 +4,28 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import jakarta.transaction.Transactional;
-import team8.laps.javaca.interfacemethods.StaffService;
 import team8.laps.javaca.model.Leave_Applied;
+import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
+import team8.laps.javaca.interfacemethods.StaffService;
+import team8.laps.javaca.model.Staff;
 import team8.laps.javaca.repository.StaffRepository;
 
 @Service
-@Transactional
-public class StaffServiceImpl implements StaffService {
+@Transactional(readOnly=true)
+public class StaffServiceImpl implements StaffService{
 
-	@Autowired
+  @Autowired
 	private StaffRepository staffrepository;
+
+	
+	@Override
+	public List<Staff> findStaffByManagerId(int id) {
+		
+		return staffrepository.findStaffByManagerId(id);
+	}
+		
 	@Override
 	@Transactional
 	public List<Leave_Applied> getLeaveHistory(int id) {

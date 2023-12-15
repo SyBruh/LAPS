@@ -1,1 +1,67 @@
-Hi manager
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="/css/role.css">
+
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>LAPS</title>
+
+</head>
+
+<body>
+
+	<header>
+		<img class="logo-image" src="/images/laps1.svg" alt="Company logo">
+
+
+	</header>
+	<div class="user-profile">
+
+
+		<span class="greeting">Hello, User</span>
+
+	</div>
+	<div>
+
+		<div class="col-sm-3">
+			<ul class="nav flex-column">
+				<li class="nav-item" style="border-radius: 10px; background-color:#446dc6;">
+					<a class="nav-link active text-white-important h4 " aria-current="page" href="viewEmployee.html"
+						th:href="@{/manager/viewEmployee/1}">View Employee</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-info h4" href="#">Leave History</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-info h4" href="#">Leave Apply</a>
+				</li>
+
+			</ul>
+		</div>
+		<div class="col-sm-9 fill">
+
+			<img class="background" src="/images/laps2.svg" alt="company logo">
+
+		</div>
+
+
+
+	</div>
+	<!-- Your Thymeleaf-specific content goes here -->
+
+</body>
+
+</html>
+

@@ -1,31 +1,45 @@
 package team8.laps.javaca.model;
+//import javax.persistence.Entity;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+
+@Table(name="StaffLeaveType")
 public class Staff_Leave_Type {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private int leave_entitle;
 	private int leave_balance;
 	
+	//mapping to table "Staff"
 	@ManyToOne
-	@JoinColumn(name = "staff_id")
+	@JoinColumn(name="staff_id")
 	private Staff staff;
-	
+	//mapping to table "Leave_Type"
 	@ManyToOne
-	@JoinColumn(name = "leavetype_id")
+	@JoinColumn(name="LeaveType_id")
 	private Leave_Type leavetype;
 	
+	
+	//Empty Constructor
 	public Staff_Leave_Type() {
 		
 	}
+	
+	//Getter and Setter
+
 	public Staff_Leave_Type(int leave_entitle, int leave_balance, Staff staff, Leave_Type leavetype) {
 		this.leave_entitle = leave_entitle;
 		this.leave_balance = leave_balance;
@@ -35,6 +49,7 @@ public class Staff_Leave_Type {
 	public int getId() {
 		return id;
 	}
+
 	public int getLeave_entitle() {
 		return leave_entitle;
 	}

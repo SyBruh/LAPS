@@ -2,8 +2,11 @@ package team8.laps.javaca.interfacemethods;
 
 import java.util.List;
 
-import team8.laps.javaca.model.Leave_Applied;
 
+import team8.laps.javaca.model.Staff;
+import team8.laps.javaca.model.Leave_Applied;
 public interface StaffService {
-	List<Leave_Applied> getLeaveHistory(int id);
+	List<Staff> findStaffByManagerId(int id);
+  List<Leave_Applied> getLeaveHistory(int id);
+	
 }
