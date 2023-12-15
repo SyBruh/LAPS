@@ -1,1 +1,36 @@
+
 Hi Staff
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head">
+	<link rel="stylesheet" 
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<!--Thinking of using bootstrap for the css? -->
+</head>
+<body>
+	<h3>Welcome to your Leave Application System!</h3>
+	<a th:href="@{/staff/submitLeave}" class="btn btn-primary btn-sm mb-3">Submit New Leave</a>
+	<table class = "table table-striped table-responsive-md">
+    <thead>
+      <tr>
+        <th>Leave Type</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Date Applied</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="leave:${leaves}">
+        <td th:text="${leave.leave_type_id}"></td>
+        <td th:text="${leave.leave_start}"></td>
+        <td th:text="${leave.leave_end}"></td>
+        <td th:text="${leave.date_applied}"></td>
+        <td th:text="${leave.status}"></td>
+      </tr>
+    </tbody>
+  </table>
+  
+</body>
+</html>
+

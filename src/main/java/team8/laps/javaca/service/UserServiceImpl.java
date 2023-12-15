@@ -7,13 +7,16 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import team8.laps.javaca.interfacemethods.UserService;
+
 import team8.laps.javaca.model.Role;
+
 import team8.laps.javaca.model.User;
 import team8.laps.javaca.repository.UserRepository;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService{
+
 
 	@Autowired
 	private UserRepository userRepository;
@@ -28,6 +31,21 @@ public class UserServiceImpl implements UserService{
 	public List<Role> getroles(int id) {
 		// TODO Auto-generated method stub
 		return userRepository.getUserRoles(id);
+	}
+	
+	//Find All users
+	@Override
+	@Transactional
+	public List<User> findAllUsers() {
+		return userRepository.findAll();
+	}
+	
+	//Update user
+	@Override
+	@Transactional
+	public User updateUser(User user) {
+		return userRepository.save(user);
+
 	}
 
 }
