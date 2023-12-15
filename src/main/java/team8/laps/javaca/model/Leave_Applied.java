@@ -16,9 +16,9 @@ import jakarta.persistence.Table;
 public class Leave_Applied {
 	@Id
 	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;	
+
 	@Column(name="leave_start")
 	private Date leave_start;
 	
@@ -29,26 +29,26 @@ public class Leave_Applied {
 	private Date date_applied;
 	
 	@Column(name="status")
-	private String status;
+	private LeaveStatusEnum status;
 	
 	@Column(name="comment")
 	private String comment;
 	
 	//Mappings
-	@ManyToOne
-	@JoinColumn(name="leave_type_id")//this one should be other names, id might cause some errors with the PK
-	//preferable name are the combination of entity name and primary key(eg.leave_type_id)
+	@ManyToOne 
+	@JoinColumn(name="leave_type_id")
 	private Leave_Type leavetype;
 	
 	@ManyToOne 
-	@JoinColumn(name="staff_id")//the same goes for this one as well
+	@JoinColumn(name="staff_id")
 	private Staff staff;
 	
 	//Constructors
 	public Leave_Applied() {}
 	
+
 	public Leave_Applied(int id,Date leave_start, Date leave_end, Date date_applied,
-			String status, String comment) {//change some arguments ids are not necessary since we will auto-gen them
+			LeaveStatusEnum status, String comment) {
 		super();
 		this.id = id;
 		this.leave_start = leave_start;
@@ -61,7 +61,8 @@ public class Leave_Applied {
 	//Getters and setters
 	public int getId() {
 		return id;
-	}	
+	}
+
 	public Date getLeave_start() {
 		return leave_start;
 	}
@@ -83,11 +84,11 @@ public class Leave_Applied {
 		this.date_applied = date_applied;
 	}
 	
-	
-	public String getStatus() {//public
+	public LeaveStatusEnum getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {//public
+
+	public void setStatus(LeaveStatusEnum status) {
 		this.status = status;
 	}
 	
@@ -96,7 +97,8 @@ public class Leave_Applied {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
-	}
+
+	}	
 
 	public Leave_Type getLeavetype() {
 		return leavetype;
@@ -114,8 +116,4 @@ public class Leave_Applied {
 		this.staff = staff;
 	}
 
-
-	
-
-	
 }
