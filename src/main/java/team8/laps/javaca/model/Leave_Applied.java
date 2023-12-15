@@ -88,8 +88,8 @@ public class Leave_Applied {
 		return status;
 	}
 
-	public void setStatus(LeaveStatusEnum submitted) {
-		this.status = submitted;
+	public void setStatus(LeaveStatusEnum status) {
+		this.status = status;
 	}
 	
 	public String getComment() {

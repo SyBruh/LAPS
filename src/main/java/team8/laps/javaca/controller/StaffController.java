@@ -63,11 +63,10 @@ public class StaffController {
 	@PostMapping("/submitLeave")
 	public String createSubmitLeave(@ModelAttribute("leaveApplied")Leave_Applied leave_applied){
 		//Setting leave status using LeaveStausEnum
-		leave_applied.setStatus(LeaveStatusEnum.Submitted);
+		leave_applied.setStatus(LeaveStatusEnum.Applied);
 		leaveAppliedServiceImpl.createLeave(leave_applied);
 		return "redirect:/staff";
 	}	
-	
 	
 
 }
