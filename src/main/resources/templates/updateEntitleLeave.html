@@ -1,1 +1,29 @@
-//Admin
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Update Entitle Leave</title>
+</head>
+<body>
+  <h2>Update</h2>
+  <form action="#" th:action="@{/modifyLeave}" th:object="${leaveForm}" method="post">
+    <label for="leaveType">Choose the holiday type:</label>
+    <select id="leaveType" name="leaveType" th:field="*{leaveType}">
+      <option value="annualLeave">Annual leave</option>
+      <option value="medicalLeave">Medical leave</option>
+      <option value="compensationLeave">Compensation leave</option>
+    </select>
+    <br><br>
+    <label for="employeeType">Emplyee type:</label>
+    <select id="employeeType" name="employeeType" th:field="*{employeeType}">
+      <option value="admin">Admin</option>
+      <option value="professional">Professional</option>
+    </select>
+    <br><br>
+    <label for="leavePeriod">Length of the holiday:</label>
+    <input type="number" id="leavePeriod" name="leavePeriod" th:field="*{leavePeriod}" min="1">
+    <br><br>
+ 
+    <input type="submit" value="提交">
+  </form>
+</body>
+</html>
