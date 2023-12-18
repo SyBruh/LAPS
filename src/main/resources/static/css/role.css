@@ -59,6 +59,12 @@ header {
     padding:50px;
     
 }
+.icon{
+	width: 30px;
+	height: 30px;
+	margin-top: 3%;
+	margin-left:2%;
+}
 
 
 .fill{
@@ -70,4 +76,5 @@ header {
 
 td{
 	font-size:10px;
+	text-align: center;
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team8.laps.javaca.model.Leave_Applied;
-import jakarta.transaction.Transactional;
 import org.springframework.transaction.annotation.Transactional;
 
 import team8.laps.javaca.interfacemethods.StaffService;
@@ -21,6 +20,7 @@ public class StaffServiceImpl implements StaffService{
 
 	
 	@Override
+	@Transactional
 	public List<Staff> findStaffByManagerId(int id) {
 		
 		return staffrepository.findStaffByManagerId(id);
