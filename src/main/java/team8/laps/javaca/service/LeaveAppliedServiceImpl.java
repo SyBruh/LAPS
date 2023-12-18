@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import team8.laps.javaca.interfacemethods.LeaveAppliedService;
 import team8.laps.javaca.model.Leave_Applied;
 import team8.laps.javaca.repository.LeaveAppliedRepository;
@@ -24,7 +26,7 @@ public class LeaveAppliedServiceImpl implements LeaveAppliedService{
 	@Transactional
 	public Leave_Applied getLeaveDetail(int id) {
 		// TODO Auto-generated method stub
-		return leaveAppliedRepository.getLeaveDetail(id);
+		return leaveAppliedRepository.findById(id).get();
 	}
 	
 	//Create Leave
@@ -68,6 +70,24 @@ public class LeaveAppliedServiceImpl implements LeaveAppliedService{
 	public void removeLeaveApplied(Leave_Applied leave) 
 	{
 		leaveAppliedRepository.delete(leave);
+	}
+
+	@Override
+	@Transactional
+	public Leave_Applied updateLeave(Leave_Applied leaveApplied) {
+		// TODO Auto-generated method stub
+		Optional<Leave_Applied> ola = leaveAppliedRepository.findById(leaveApplied.getId());
+		if(ola.isPresent()) {
+			Leave_Applied la = ola.get();
+			la.setComment(leaveApplied.getComment());
+			la.setDate_applied(leaveApplied.getDate_applied());
+			la.setLeave_end(leaveApplied.getLeave_end());
+			la.setLeave_start(leaveApplied.getLeave_start());
+			la.setLeavetype(leaveApplied.getLeavetype());;
+			la.setStatus(leaveApplied.getStatus());
+			leaveAppliedRepository.save(la);
+		}		
+		return ola.get();
 	}
 	
 }

@@ -1,5 +1,6 @@
 package team8.laps.javaca.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -20,13 +21,13 @@ public class Leave_Applied {
 	private int id;	
 
 	@Column(name="leave_start")
-	private Date leave_start;
+	private LocalDate leave_start;
 	
 	@Column(name="leave_end")
-	private Date leave_end;
+	private LocalDate leave_end;
 	
 	@Column(name="date_applied")
-	private Date date_applied;
+	private LocalDate date_applied;
 	
 	@Column(name="status")
 	private LeaveStatusEnum status;
@@ -36,18 +37,24 @@ public class Leave_Applied {
 	
 	//Mappings
 	@ManyToOne 
-	@JoinColumn(name="leave_type_id")
+	@JoinColumn(name="leave_type_id",  insertable = false, updatable = false)
 	private Leave_Type leavetype;
 	
+	@Column(name="leave_type_id")
+	private Integer leavetype_id;
+	
 	@ManyToOne 
-	@JoinColumn(name="staff_id")
+	@JoinColumn(name="staff_id",  insertable = false, updatable = false)
 	private Staff staff;
+	
+	@Column(name="staff_id")
+	private int staffId;
 	
 	//Constructors
 	public Leave_Applied() {}
 	
 
-	public Leave_Applied(int id,Date leave_start, Date leave_end, Date date_applied,
+	public Leave_Applied(int id,LocalDate leave_start, LocalDate leave_end, LocalDate date_applied,
 			LeaveStatusEnum status, String comment) {
 		super();
 		this.id = id;
@@ -55,7 +62,7 @@ public class Leave_Applied {
 		this.leave_end = leave_end;
 		this.date_applied = date_applied;
 		this.status = status;
-		this.comment = comment;
+		this.comment = comment;		
 	}
 
 	//Getters and setters
@@ -63,24 +70,24 @@ public class Leave_Applied {
 		return id;
 	}
 
-	public Date getLeave_start() {
+	public LocalDate getLeave_start() {
 		return leave_start;
 	}
-	public void setLeave_start(Date leave_start) {
+	public void setLeave_start(LocalDate leave_start) {
 		this.leave_start = leave_start;
 	}
 	
-	public Date getLeave_end() {
+	public LocalDate getLeave_end() {
 		return leave_end;
 	}
-	public void setLeave_end(Date leave_end) {
+	public void setLeave_end(LocalDate leave_end) {
 		this.leave_end = leave_end;
 	}
 	
-	public Date getDate_applied() {
+	public LocalDate getDate_applied() {
 		return date_applied;
 	}
-	public void setDate_applied(Date date_applied) {
+	public void setDate_applied(LocalDate date_applied) {
 		this.date_applied = date_applied;
 	}
 	
@@ -115,5 +122,27 @@ public class Leave_Applied {
 	public void setStaff(Staff staff) {
 		this.staff = staff;
 	}
+
+
+	public int getStaffId() {
+		return staffId;
+	}
+
+
+	public void setStaffId(Integer staffId) {
+		this.staffId = staffId;
+	}
+
+
+	public Integer getLeave_type_id() {
+		return leavetype_id;
+	}
+
+
+	public void setLeave_type_id(Integer leavetype_id) {
+		this.leavetype_id = leavetype_id;
+	}
+	
+
 
 }

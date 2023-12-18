@@ -1,8 +1,10 @@
 package team8.laps.javaca.controller;
+import java.time.LocalDate;
 import java.util.Date;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,18 +12,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.servlet.http.HttpSession;
 import team8.laps.javaca.interfacemethods.LeaveAppliedService;
+import team8.laps.javaca.interfacemethods.LeaveTypeService;
 import team8.laps.javaca.interfacemethods.StaffService;
 import team8.laps.javaca.service.LeaveAppliedServiceImpl;
 import team8.laps.javaca.service.StaffServiceImpl;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import team8.laps.javaca.model.LeaveStatusEnum;
 import team8.laps.javaca.model.Leave_Applied;
-import team8.laps.javaca.service.LeaveAppliedServiceImpl;
+import team8.laps.javaca.model.Leave_Type;
+import team8.laps.javaca.model.Staff;
 
 
 @Controller
@@ -33,9 +38,13 @@ public class StaffController {
 	@Autowired
 	private LeaveAppliedService leaveAppliedservice;
 	@Autowired
-	public void getservice(StaffServiceImpl staffservice, LeaveAppliedServiceImpl leaveAppliedservice) {
+	private LeaveTypeService leaveTypeService;
+	
+	@Autowired
+	public void getservice(StaffServiceImpl staffservice, LeaveAppliedServiceImpl leaveAppliedservice, LeaveTypeService leaveTypeService) {
 		this.staffservice = staffservice;
 		this.leaveAppliedservice = leaveAppliedservice;
+		this.leaveTypeService = leaveTypeService;
 	}
 	//personal leave history is (/viewLeaveHistory)
 	@GetMapping("/viewLeaveHistory/{staff_id}")// will change to HttpSession
@@ -45,7 +54,7 @@ public class StaffController {
 	}
 	//Leave Detail is (/viewDetail)
 	@GetMapping("/viewDetail/{la_id}")
-	public String ViewDetail(Model model, @PathVariable("la_id") int id){
+	public String ViewDetail(Model model, @PathVariable("la_id") int id){		
 		model.addAttribute("Leave", leaveAppliedservice.getLeaveDetail(id));
 		return "leaveDetail";
 	}
@@ -83,20 +92,34 @@ public class StaffController {
 	
 	//Bind Leave_Applied object to form model
 	@GetMapping("/submitLeave")
-	public String submitLeaveForm(Model model) 
+	public String submitLeaveForm(HttpSession sessionObj, Model model) 
 	{
+
+		//Bind Leave Applied object to form model
 		Leave_Applied leave_applied = new Leave_Applied();
-		model.addAttribute("leaveApplied", leave_applied);
+		model.addAttribute("leaveApplied", leave_applied);		
+		
+		//Bind Leave types for drop down list
+		model.addAttribute("leave_types", leaveTypeService.getAllLeaveType());
 		return "submitLeave";
 	}
 	
 	//POST submit leave
 	@PostMapping("/submitLeave")
-	public String createSubmitLeave(@ModelAttribute("leaveApplied")Leave_Applied leave_applied){
-		//Setting leave status using LeaveStausEnum
+	public String createSubmitLeave(@ModelAttribute("leaveApplied")Leave_Applied leave_applied, HttpSession sessionObj){
+		//Setting user id
+		int staff_id = (int) sessionObj.getAttribute("staffid");
+		leave_applied.setStaffId(staff_id);
+		
+		//Setting leave status 
 		leave_applied.setStatus(LeaveStatusEnum.Applied);
+		
+		//Set current date
+		LocalDate localdate = LocalDate.now();
+		leave_applied.setDate_applied(localdate);
+		
 		leaveAppliedservice.createLeave(leave_applied);
-		return "redirect:/staff";
+		return "staff";
 	}	
 	
 }
