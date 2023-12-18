@@ -115,5 +115,8 @@ public class Leave_Applied {
 	public void setStaff(Staff staff) {
 		this.staff = staff;
 	}
+	
+	//public Date Stringtodate(String st) {
+	//}
 
 }
