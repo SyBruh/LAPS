@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import team8.laps.javaca.interfacemethods.LeaveAppliedService;
 import team8.laps.javaca.interfacemethods.StaffService;
 import team8.laps.javaca.service.LeaveAppliedServiceImpl;
@@ -17,11 +16,10 @@ import team8.laps.javaca.service.StaffServiceImpl;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import team8.laps.javaca.model.LeaveStatusEnum;
 import team8.laps.javaca.model.Leave_Applied;
-import team8.laps.javaca.service.LeaveAppliedServiceImpl;
 
 
 @Controller
@@ -45,7 +43,7 @@ public class StaffController {
 	}
 	//Leave Detail is (/viewDetail)
 	@GetMapping("/viewDetail/{la_id}")
-	public String ViewDetail(Model model, @PathVariable("la_id") int id){
+	public String ViewDetail(Model model, @PathVariable("la_id") int id){		
 		model.addAttribute("Leave", leaveAppliedservice.getLeaveDetail(id));
 		return "leaveDetail";
 	}

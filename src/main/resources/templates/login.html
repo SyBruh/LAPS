@@ -28,11 +28,18 @@
 				<th>Password</th>
 				<td><input type="text" th:field="*{password}"></td>
 			</tr>
+			<div style="font-weight: bold">
+				Login as:
+			</div>
+			<select name="keyword">
+				<option value="staff">Staff</option>
+				<option value="admin">Admin</option>
+			</select>
 			<tr>
 				<td>
 				</td>
 				<td>
-					<input type="submit" value="Confirm Deletion" />
+					<input type="submit" value="Login"/>
 				</td>
 			</tr>
 		</table>

@@ -39,10 +39,10 @@
 				<ul class="nav flex-column">
 					<li class="nav-item" style="border-radius: 10px; background-color:#446dc6;">
 						<a class="nav-link active text-white-important h4 " aria-current="page" href="viewEmployee.html"
-							th:href="@{/manager/viewEmployee/1}">View Employee</a>
+							th:href="@{/manager/viewEmployee/}+${session.staffid}">View Employee</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link text-info h4" href="#">Leave History</a>
+						<a class="nav-link text-info h4" href = "PersonalLeaveHistory.html" th:href = "@{staff/viewLeaveHistory/} + ${session.staffid}">Leave History</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link text-info h4" href="#">Leave Apply</a>
@@ -57,7 +57,7 @@
 							<th>Employee ID</th>
 							<th>Employee Name</th>
 							<th>Employee Designation</th>
-							<th>Employee Detail</th>
+							<th>Employee Leave History</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -65,7 +65,7 @@
 							<td class="h5" th:text="${staff.id}"></td>
 							<td class="h5" th:text="${staff.staff_name}"></td>
 							<td class="h5" th:text="${staff.designation}"></td>
-							<td  class="h5"><button>Detail</button></td>
+							<td  class="h5"><a type = "button" class = "btn btn-primary" href = "PersonalLeaveHistory.html" th:href = "@{/staff/viewLeaveHistory/} + ${staff.id}" >Leave History</a></td>
 						</tr>
 					</tbody>
 				</table>
