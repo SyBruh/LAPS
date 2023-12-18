@@ -3,39 +3,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout.html :: html_head"/>
 <body>
-		<h3>Update User</h3>
+		<h3 style="font-family: Microsoft Sans Serif">Update User</h3>
 	<form action="#" th:action="@{/updateUser}"
 		th:object="${updateUser}" method="post">
 		<table>
 			<tbody>
-				<tr>
-					<td><span th:text="Name"></span>Name: </td>
-				</tr>
-				<tr>
-					<td>
-						<div style="display: flex; align-items: center;">
-						<label>User Type: </label>
-						  <select name="role_id" id="role_id" th:field="*{role_id}">
-							<option value="">--Select Role Type--</option>
+				<thead>
+				  <tr>
+					<th></th>
+					<th></th>
+				  </tr>
+				</thead>
+					<tr>
+						<td><span th:text="Employee Name" style="width: 138px; height: 55px; color: black; font-size: 20px"></span>Employee Name: </td>
+						<td><input type="text" th:field="${user.user_name}" th:value="${user.user_name}" size="40" style="width: 235px; height: 28px; background: white; border-radius: 4px; border: 1px black solid"/></td>
+					</tr>
+					<tr>
+						<td><label style="width: 95px; height: 52px; color: black; padding-left: 36px">User Type: </label></td>
+						<td>
+						  <select name="role_id" id="role_id" th:field="*{role_id}" style="width: 241px; height: 33px; background: white; border-radius: 4px; border: 1px black solid">
+							<option value="" style="text-align:center">Select Role Type</option>
 							<option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.role}"></option>
 						  </select>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<span th:text="password"></span>
-						<div style="display: grid; grid-template-columns: 1fr 3fr;">
-							<label>Password:</label>
-							<input type="text" th:value="*{password}" th:field="*{password}" />
-						</div>
-					</td>					
-				</tr>
-				<tr>
-					<td>
-						<input type="submit" value="Update User" class="updateuser"/>
-						<input type="reset" value="Reset" class="updateuser"/>
-					</td>
+						  </td>
+					</tr>
+					<tr>
+						<td><span th:text="Password" style="width: 138px; height: 55px; color: black; font-size: 20px; padding-left: 38px"></span>Password: </td>
+						<td><input type="text" th:field="*{password}" th:value="*{password}" style="width: 235px; height: 28px; background: white; border-radius: 4px; border: 1px black solid"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<input type="submit" value="Update User" class="updateuser" style="width: 100px; height: 31px; background: white; border-radius: 4px; border: 1px black solid; text-align: center; color: black; font-size: 13px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)"/>
+							<input type="reset" value="Reset" class="updateuser" style="width: 100px; height: 31px; background: white; border-radius: 4px; border: 1px black solid; text-align: center; color: black; font-size: 13px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)"/>
+						</td>
+					</tr>
 				</tr>			
 			</tbody>
 		</table>
