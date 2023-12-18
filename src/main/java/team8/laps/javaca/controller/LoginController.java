@@ -8,8 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import team8.laps.javaca.interfacemethods.UserService;
@@ -39,18 +42,19 @@ public class LoginController {
 	}
 	
 	@PostMapping("")
-	public String login(@ModelAttribute("user")@Valid User user,BindingResult bindingresult,Model model, HttpSession sessionobj) {
+	public String login(@ModelAttribute("user")@Valid User user,BindingResult bindingresult,Model model,@RequestParam("keyword") String keyword, HttpSession sessionobj) {
 		if(bindingresult.hasErrors()) {
 			return "login";
 		}
 		User rluser = userService.userAuthentication(user.getUser_name(), user.getPassword());
 		if(rluser != null) {
+			sessionobj.setAttribute("staffid", rluser.getStaff().getId());
 			sessionobj.setAttribute("username", rluser.getUser_name());
 			sessionobj.setAttribute("staffname", rluser.getStaff().getStaff_name());
 			List<Role> roles = userService.getroles(rluser.getId());
 			List<String> rol = new ArrayList<String>();
 			roles.stream().forEach(r -> rol.add(r.getRole()));
-			if(rol.contains("admin")) {
+			if(rol.contains("admin") && keyword == "admin") {
 				sessionobj.setAttribute("role", "admin");
 				return "admin";
 			}else if(rol.contains("manager")) {
