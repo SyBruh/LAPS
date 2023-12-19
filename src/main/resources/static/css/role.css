@@ -1,3 +1,6 @@
+
+
+
 body {
     font-family: 'Montserrat', 'Arial Narrow';
     margin: 0;
@@ -66,6 +69,10 @@ header {
 	margin-left:2%;
 }
 
+td{
+	font-size:10px;
+	text-align: center;
+}
 
 .fill{
     height: 800px;
@@ -74,15 +81,3 @@ header {
     align-self: center;
 }
 
-.fill-submit{
-    height: 800px;
-    width:auto;
-    background-color: white;
-    align-self: center;
-}
-
-
-td{
-	font-size:10px;
-	text-align: center;
-}

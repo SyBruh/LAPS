@@ -92,9 +92,12 @@ public class StaffController {
 	
 	//Bind Leave_Applied object to form model
 	@GetMapping("/submitLeave")
-	public String submitLeaveForm(Model model) 
+	public String submitLeaveForm(Model model, HttpSession sessionObj) 
 	{
-
+		//Bind username to model
+		String username = (String)sessionObj.getAttribute("username");
+		model.addAttribute("username", username);
+		
 		//Bind Leave Applied object to form model
 		Leave_Applied leave_applied = new Leave_Applied();
 		model.addAttribute("leaveApplied", leave_applied);		

@@ -1,0 +1,67 @@
+.submitform-area{
+    height: 100vh;
+    width:auto;
+    border: 1px solid #ccc;
+    background-color: white;
+    align-self: center;
+}
+
+.submit-sidebar {
+  width: 300px;
+  background-color:#F7F8FC;
+  float: left;
+  height:100vh;
+  position:relative;
+  overflow-y:auto;
+  overflow-x:hidden;
+  border-right: 1px solid #ccc;
+  padding-right: 15px;
+}
+
+.nav-link-clicked{
+	background-color: #446dc6;
+  	color: white; 
+  	padding: 10px 25px; 
+  	border-radius: 10px; 
+  	display: inline-block; 
+  	text-decoration: none; 
+  	width: 235px;
+  	font-size: 18px;
+  	margin-left: -25px;
+  	
+  	&:hover {
+    background-color: #f0eded;
+    }
+}
+
+.nav-link{
+	text-decoration: none;
+	font-size: 18px;
+	width: 235px;
+	display: inline-block; 
+	padding: 8px 25px; 
+	margin-left: -25px;
+
+	
+	&:hover {
+    background-color: #f0eded;
+  }
+}
+
+.submit-button{
+	width: 100px; 
+	height: 31px; 
+	background: white; 
+	border-radius: 4px; 
+	border: 1px black solid; 
+	text-align: center; 
+	color: black; 
+	font-size: 13px; 
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /*shadow effect*/
+	
+	&:active { /*Press down effect*/
+    transform: scale(0.97); /* simulate being pressed */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25); /* deeper shadow */
+    border-color: #ccc; /* lighter border for depth */
+  }
+}

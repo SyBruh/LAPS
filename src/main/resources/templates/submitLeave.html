@@ -9,52 +9,76 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		
 		<link rel="stylesheet" href="/css/role.css">
+		<link rel="stylesheet" href="/css/submitLeave.css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+		<title>Submit Leave</title>
 	</head>
 <body>
 	<header>
 		<img class="logo-image" src="/images/laps1.svg" alt="Company logo">
 	</header>
 	<div class="user-profile">
-		<span class="greeting">Hello, User</span>
+		<span class="greeting">Hello, <span th:text="${username}"></span></span>
 	</div>
+	<div class="container-fluid">
+	<div class="row">
 	
-		<div class="col-sm-9 fill-submit" style= "padding-left: 45px" >
-		<h3 style="font-family: Microsoft Sans Serif">Submit New Leave Application</h3>
+	<div class="sidebar-container">
+	  <div class="submit-sidebar">
+	      <div class="col-md-12">
+	        <ul class="nav-ul">
+	          <li style="list-style: none;">
+				  <a class="nav-link" href="PersonalLeaveHistory.html">Leave History</a>
+			  </li>
+			  </br>
+			  <li style="list-style: none;">
+					<a class="nav-link-clicked"  th:href="@{/staff/submitLeave}">Leave Apply</a>
+				</li>
+	        </ul>
+	    </div>
+    </div>
+
+	<div class="col-sm-9 submitform-area" >
+		<table>
+			<tr>
+				<td style="width: 400px; height: 55px; color: black; font-size: 24px; padding-left: 1px;"><b>Submit New Leave Application</b></td>
+			</tr>
+		</table>
 		<form action="#" th:action="@{/staff/submitLeave}"
 			th:object="${leaveApplied}" method="post">
 			<table>
 				<tbody>
 					<tr>
-						<label style="width: 95px; height: 52px; color: black; padding-left: 48px; font-size: 16px;">Leave Type: </label>
+						<label style="width: 95px; height: 52px; color: black; padding-left: 88px; font-size: 16px;">Leave Type: </label>
 						<select th:field="*{leave_type_id}" style="width: 241px; height: 33px; background: white; border-radius: 4px; border: 1px black solid">
 							<option value="" style="text-align:center">Select Leave Type</option>
 							<option th:each="leave_type: ${leave_types}" th:value="${leave_type.id}" th:text="${leave_type.LeaveType}" style="text-align:center"></option>
 						</select>
 					</tr>
 					<tr>
-						<td style="width: 138px; height: 55px; color: black; font-size: 16px;">Leave Start Date: </td>
+						<td style="width: 138px; height: 55px; color: black; font-size: 16px; padding-left: 38px;">Leave Start Date: </td>
 						<td><input type="date" th:value="*{leave_start}" th:field="*{leave_start}" style="width: 237px; height: 33px; background: white; border-radius: 4px; border: 1px black solid; text-align:center"/></td>
 					</tr>
 					<tr>
-						<td style="width: 126px; height: 50px; color: black; font-size: 16px; padding-left: 5px">Leave End Date: </td>
+						<td style="width: 126px; height: 50px; color: black; font-size: 16px; padding-left: 45px">Leave End Date: </td>
 						<td><input type="date" th:value="*{leave_end}" th:field="*{leave_end}" style="width: 237px; height: 33px; background: white; border-radius: 4px; border: 1px black solid; text-align:center"/></td>
 					</tr>
 					<tr>
-						<td style="width: 92px; height: 47px; color: black; font-size: 16px; padding-left: 38px">Comments: </td>
+						<td style="width: 92px; height: 47px; color: black; font-size: 16px; padding-left: 75px">Comments: </td>
 						<td><input type="text" th:field="*{comment}" size="40" style="width: 235px; height: 33px; background: white; border-radius: 4px; border: 1px black solid"/></td>
 					</tr>
 					<tr>
 						<td></td>
 						<td>
-							<input type="submit" value="Submit Leave" class="submitLeave" style="width: 100px; height: 31px; background: white; border-radius: 4px; border: 1px black solid; text-align: center; color: black; font-size: 13px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)"/>
-							<input type="reset" value="Reset" class="submiLeave"  style="width: 79px; height: 31px; background: white; border-radius: 4px; border: 1px black solid; text-align: center; color: black; font-size: 13px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)"/>
+							<input type="submit" value="Submit Leave" class="submit-button"/>
+							<input type="reset" value="Reset" class="submit-button"/>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</form>
-		<button onclick="history.back()" style="width: 79px; height: 31px; background: white; border-radius: 4px; border: 1px black solid; text-align: center; color: black; font-size: 13px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)">Go Back</button>
-		</div>
+	</div>
+	</div>
+	</div>
 </body>
 </html>
