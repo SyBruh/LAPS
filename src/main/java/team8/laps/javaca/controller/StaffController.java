@@ -92,7 +92,7 @@ public class StaffController {
 	
 	//Bind Leave_Applied object to form model
 	@GetMapping("/submitLeave")
-	public String submitLeaveForm(HttpSession sessionObj, Model model) 
+	public String submitLeaveForm(Model model) 
 	{
 
 		//Bind Leave Applied object to form model
