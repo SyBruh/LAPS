@@ -1,6 +1,6 @@
 package team8.laps.javaca.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,14 +12,14 @@ public class Anual_Holiday {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private LocalDateTime StartDate;
-	private LocalDateTime EndDate;
+	private LocalDate StartDate;
+	private LocalDate EndDate;
 	private String Description;
 	private String name;
 	public Anual_Holiday() {
 		
 	}
-	public Anual_Holiday(LocalDateTime StartDate,LocalDateTime EndDate, String Description,String name) {
+	public Anual_Holiday(LocalDate StartDate,LocalDate EndDate, String Description,String name) {
 		this.StartDate = StartDate;
 		this.EndDate = EndDate;
 		this.Description = Description;
@@ -28,16 +28,16 @@ public class Anual_Holiday {
 	public int getId() {
 		return id;
 	}
-	public LocalDateTime getStartDate() {
+	public LocalDate getStartDate() {
 		return StartDate;
 	}
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(LocalDate startDate) {
 		StartDate = startDate;
 	}
-	public LocalDateTime getEndDate() {
+	public LocalDate getEndDate() {
 		return EndDate;
 	}
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(LocalDate endDate) {
 		EndDate = endDate;
 	}
 	public String getDescription() {

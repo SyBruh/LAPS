@@ -1,0 +1,88 @@
+<!--Staff-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		
+		<link rel="stylesheet" href="/css/role.css">
+		<link rel="stylesheet" href="/css/submitLeave.css">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+		<title>Submit Leave</title>
+	</head>
+<body>
+	<header>
+		<img class="logo-image" src="/images/laps1.svg" alt="Company logo">
+	</header>
+	<div class="user-profile">
+		<span class="greeting">Hello, <span th:text="${username}"></span></span>
+	</div>
+	<div class="container-fluid">
+	<div class="row">
+	
+	<div class="sidebar-container">
+	  <div class="submit-sidebar">
+	      <div class="col-md-12">
+	        <ul class="nav-ul">
+			  <li style="list-style: none;">
+				<a class="nav-link" th:href="@{/admin/updateEntitleLeave}">Update Entitle Leave</a>
+			  </li>
+			  <li style="list-style: none;">
+				 <a class="nav-link" th:href="@{/admin/viewUsers}">User List</a>
+			  </li>
+	          <li style="list-style: none;">
+				  <a class="nav-link" th:href="@{/admin/holidayList}">Holiday List</a>
+			  </li>
+			  </br>
+			  <li style="list-style: none;">
+					<a class="nav-link"  th:href="@{/admin/addHoliday}">Add Holiday</a>
+			  </li>
+	        </ul>
+	    </div>
+    </div>
+
+	<div class="col-sm-9 submitform-area" >
+		<table>
+			<tr>
+				<td style="width: 400px; height: 55px; color: black; font-size: 24px; padding-left: 1px;"><b>Update Holiday</b></td>
+			</tr>
+		</table>
+		<form action="#" th:action="@{/admin/updateHoliday}"
+			th:object="${updateHoliday}" method="post">
+			<table>
+				<tbody>
+					<tr>
+						<td style="width: 138px; height: 55px; color: black; font-size: 16px; padding-left: 38px;">Name: </td>
+						<td><input type="text" th:value="*{name}" th:field="*{name}" style="width: 237px; height: 33px; background: white; border-radius: 4px; border: 1px black solid; text-align:center"/></td>
+					</tr>
+					<tr>
+						<td style="width: 138px; height: 55px; color: black; font-size: 16px; padding-left: 38px;">Holiday Start Date: </td>
+						<td><input type="date" th:value="*{start_date}" th:field="*{start_date}" style="width: 237px; height: 33px; background: white; border-radius: 4px; border: 1px black solid; text-align:center"/></td>
+					</tr>
+					<tr>
+						<td style="width: 126px; height: 50px; color: black; font-size: 16px; padding-left: 45px">Holiday End Date: </td>
+						<td><input type="date" th:value="*{end_date}" th:field="*{end_date}" style="width: 237px; height: 33px; background: white; border-radius: 4px; border: 1px black solid; text-align:center"/></td>
+					</tr>
+					<tr>
+						<td style="width: 92px; height: 47px; color: black; font-size: 16px; padding-left: 75px">Description: </td>
+						<td><input type="text" th:value="*{description}" th:field="*{description}" size="40" style="width: 235px; height: 33px; background: white; border-radius: 4px; border: 1px black solid"/></td>
+					</tr>
+					<tr>
+						<td><input type="hidden" th:value="*{id}" th:field="*{id}"/></td>
+						<td></td>
+						<td>
+							<input type="submit" value="Update Holiday" class="submit-button"/>
+							<input type="reset" value="Reset" class="submit-button"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
+	</div>
+	</div>
+</body>
+</html>

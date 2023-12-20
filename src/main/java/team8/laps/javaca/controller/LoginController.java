@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import team8.laps.javaca.interfacemethods.StaffService;
 import team8.laps.javaca.interfacemethods.UserService;
 import team8.laps.javaca.model.Role;
 import team8.laps.javaca.model.User;
+import team8.laps.javaca.service.StaffServiceImpl;
 import team8.laps.javaca.service.UserServiceImpl;
 
 @Controller
@@ -26,6 +28,7 @@ public class LoginController {
 	
 	@Autowired
 	private UserService userService;
+	
 	
 	@Autowired
 	public void setService(UserServiceImpl userService) {
@@ -48,7 +51,7 @@ public class LoginController {
 		}
 		User rluser = userService.userAuthentication(user.getUser_name(), user.getPassword());
 		if(rluser != null) {
-			sessionobj.setAttribute("staffid", rluser.getStaff().getId());
+			sessionobj.setAttribute("staffid", rluser.getStaff().getId()); 
 			sessionobj.setAttribute("username", rluser.getUser_name());
 			sessionobj.setAttribute("staffname", rluser.getStaff().getStaff_name());
 			List<Role> roles = userService.getroles(rluser.getId());

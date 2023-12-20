@@ -7,13 +7,17 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+import jakarta.servlet.http.HttpSession;
 import team8.laps.javaca.interfacemethods.StaffService;
+import team8.laps.javaca.model.Anual_Holiday;
 import team8.laps.javaca.model.Staff;
 import team8.laps.javaca.model.User;
+import team8.laps.javaca.repository.AnualHolidayRepository;
+import team8.laps.javaca.service.AnualHolidayServiceImpl;
 import team8.laps.javaca.service.StaffServiceImpl;
 import team8.laps.javaca.model.User;
 import team8.laps.javaca.service.UserServiceImpl;
@@ -22,20 +26,23 @@ import team8.laps.javaca.service.UserServiceImpl;
 @RequestMapping("admin")
 public class AdminController {	
   
-  @Autowired
-	private UserServiceImpl userServiceImpl;
+   @Autowired
+   private UserServiceImpl userServiceImpl;
+  
+   @Autowired
+   private AnualHolidayServiceImpl anualHolidayServiceImpl;
 
-	 @GetMapping("/createUser")
-	    public String addUserForm(Model model) {
-	        User user = new User();
-	        Staff staff = new Staff();
-	        
-	        model.addAttribute("user", user);
-	        model.addAttribute("staff", staff);
-	        
-	        
-	        return "addUser"; 
-	    }
+	@GetMapping("/createUser")
+	public String addUserForm(Model model) {
+	    User user = new User();
+	    Staff staff = new Staff();
+	    
+	    model.addAttribute("user", user);
+	    model.addAttribute("staff", staff);
+	    
+	    
+	    return "addUser"; 
+	}
 	
 	//Add user will map with (/createUser)
 	//Update Entitle will map with (updateEntitle)
@@ -76,7 +83,48 @@ public class AdminController {
 		return "redirect:/userList";
 	}
 	
-	//If need more controller map it accordingly
+	//View holiday list
+	@GetMapping("/holidayList")
+	public String findAllHoliday(Model model, HttpSession sessionObj) {
+		String username = (String)sessionObj.getAttribute("username");
+		model.addAttribute("username", username);
+		model.addAttribute("holidays", anualHolidayServiceImpl.findAllHoliday());
+		return "holidayList";
+	}
+	
+	//Update Annual holiday
+	@GetMapping("/updateHoliday/{id}")
+	public String updateHolidayForm(@PathVariable("id") int holidayId, Model model, HttpSession sessionObj) {
+		String username = (String)sessionObj.getAttribute("username");
+		model.addAttribute("username", username);
+		Anual_Holiday updateHoliday = anualHolidayServiceImpl.findHolidayById(holidayId);
+		model.addAttribute("updateHoliday", updateHoliday);
+		return "updateHoliday";
+	}
+	
+	//Post update holiday
+	@PostMapping("/updateHoliday")
+	public String updateHoliday(@ModelAttribute("updateholiday") Anual_Holiday updateholiday) {
+		anualHolidayServiceImpl.updateAnualHoliday(updateholiday);
+		return "redirect:/holidayList";
+	}
+	
+	//Add Holiday
+	@GetMapping("/addHoliday")
+	public String addHolidayForm(Model model, HttpSession sessionObj) {
+		String username = (String)sessionObj.getAttribute("username");
+		model.addAttribute("username", username);
+		Anual_Holiday addHoliday = new Anual_Holiday();
+		model.addAttribute("addholiday", addHoliday);
+		return "addHoliday";
+	}
+	
+	//POST add holiday
+	@PostMapping("/addholiday")
+	public String addHoliday(@ModelAttribute("addholiday")Anual_Holiday addholiday) {
+		anualHolidayServiceImpl.createAnualHoliday(addholiday);
+		return "redirect:/holidayList";
+	}
 	
 	
 }
