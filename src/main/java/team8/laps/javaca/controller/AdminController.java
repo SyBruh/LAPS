@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import team8.laps.javaca.interfacemethods.StaffService;
@@ -92,12 +94,14 @@ public class AdminController {
 		return "holidayList";
 	}
 	
+
+	
 	//Update Annual holiday
-	@GetMapping("/updateHoliday/{id}")
-	public String updateHolidayForm(@PathVariable("id") int holidayId, Model model, HttpSession sessionObj) {
-		String username = (String)sessionObj.getAttribute("username");
-		model.addAttribute("username", username);
+	@GetMapping("/updateHoliday")
+	public String updateHolidayForm(@RequestParam("selectedHolidayId") int holidayId, Model model) {
+//		int holidayId = Integer.parseInt(Id);
 		Anual_Holiday updateHoliday = anualHolidayServiceImpl.findHolidayById(holidayId);
+		System.out.println("Found holiday" + updateHoliday);
 		model.addAttribute("updateHoliday", updateHoliday);
 		return "updateHoliday";
 	}
@@ -109,7 +113,7 @@ public class AdminController {
 		return "redirect:/holidayList";
 	}
 	
-	//Add Holiday
+	//Add holiday object to form
 	@GetMapping("/addHoliday")
 	public String addHolidayForm(Model model, HttpSession sessionObj) {
 		String username = (String)sessionObj.getAttribute("username");
@@ -119,11 +123,11 @@ public class AdminController {
 		return "addHoliday";
 	}
 	
-	//POST add holiday
-	@PostMapping("/addholiday")
+	//Post add holiday
+	@PostMapping("/addHoliday")
 	public String addHoliday(@ModelAttribute("addholiday")Anual_Holiday addholiday) {
 		anualHolidayServiceImpl.createAnualHoliday(addholiday);
-		return "redirect:/holidayList";
+		return "admin";
 	}
 	
 	

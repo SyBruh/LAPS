@@ -57,7 +57,7 @@ public class LoginController {
 			List<Role> roles = userService.getroles(rluser.getId());
 			List<String> rol = new ArrayList<String>();
 			roles.stream().forEach(r -> rol.add(r.getRole()));
-			if(rol.contains("admin") && keyword == "admin") {
+			if(rol.contains("admin") && keyword.equals("admin")) {
 				sessionobj.setAttribute("role", "admin");
 				return "admin";
 			}else if(rol.contains("manager")) {
