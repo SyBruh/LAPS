@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import jakarta.transaction.Transactional;
 import team8.laps.javaca.model.Anual_Holiday;
 
 public interface AnualHolidayRepository extends JpaRepository<Anual_Holiday, Integer>{
@@ -34,4 +36,11 @@ public interface AnualHolidayRepository extends JpaRepository<Anual_Holiday, Int
 	//Find Holiday by Id
 	@Query("SELECT ah FROM Anual_Holiday ah WHERE ah.id = :id")
 	public Anual_Holiday findHolidayById(@Param("id")int id);
+	
+	//Delete Holiday by Id
+	@Modifying
+	@Query("DELETE FROM Anual_Holiday ah WHERE ah.id = :id")
+	public void deleteHolidayById(int id);
+	
+	
 }

@@ -36,7 +36,6 @@
 	          <li style="list-style: none;">
 				  <a class="nav-link-clicked" th:href="@{/admin/holidayList}">Holiday List</a>
 			  </li>
-			  </br>
 			  <li style="list-style: none;">
 					<a class="nav-link"  th:href="@{/admin/addHoliday}">Add Holiday</a>
 			  </li>
@@ -47,7 +46,7 @@
 	<div class="col-sm-9 submitform-area" >
 		<table>
 			<tr>
-				<td style="width: 400px; height: 55px; color: black; font-size: 24px; padding-left: 1px;"><b>Holiday List</b></td>
+				<td style="width: 400px; height: 55px; color: black; font-size: 24px; padding-left: 8px; text-align: left;"><b>Holiday List</b></td>
 			</tr>
 		</table>
 		<table>
@@ -80,7 +79,6 @@
 				  <td>
 			  		<label style="width: 95px; height: 52px; color: black; padding-left: 20px; padding-right: 10px; font-size: 16px;"><b>Update Holiday</b> </label>
 					<select name="selectedHolidayId" style="width: 241px; height: 33px; background: white; border-radius: 4px; border: 1px black solid">
-						<option value="" style="text-align:center">Select Holiday</option>
 						<option th:each="holiday: ${holidays}" th:value="${holiday.id}" th:text="${holiday.id} + '. '+ ${holiday.name}" style="text-align:center"></option>
 					</select>
 					<input type="submit" value="Update Holiday" class="submit-button"/>
@@ -88,6 +86,7 @@
 			  </tr>
 			  
 		</form>
+			
 	</div>
 	</div>
 	</div>

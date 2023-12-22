@@ -12,13 +12,15 @@
 		<link rel="stylesheet" href="/css/submitLeave.css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
 		<title>Update Holiday</title>
+		
+		
 	</head>
 <body>
 	<header>
 		<img class="logo-image" src="/images/laps1.svg" alt="Company logo">
 	</header>
 	<div class="user-profile">
-		<span class="greeting">Hello, <span th:text="${username}"></span></span>
+		<span class="greeting">Hello, <span th:text="${username}"></span>
 	</div>
 	<div class="container-fluid">
 	<div class="row">
@@ -36,7 +38,9 @@
 	          <li style="list-style: none;">
 				  <a class="nav-link" th:href="@{/admin/holidayList}">Holiday List</a>
 			  </li>
-			  </br>
+			  <li style="list-style: none;">
+					<a class="nav-link-clicked">Update Holiday</a>
+			  </li>
 			  <li style="list-style: none;">
 					<a class="nav-link"  th:href="@{/admin/addHoliday}">Add Holiday</a>
 			  </li>
@@ -47,7 +51,7 @@
 	<div class="col-sm-9 submitform-area" >
 		<table>
 			<tr>
-				<td style="width: 400px; height: 55px; color: black; font-size: 24px; padding-left: 1px;"><b>Update Holiday</b></td>
+				<td style="width: 400px; height: 55px; color: black; font-size: 24px; padding-left: 28px; text-align: left;"><b>Update Holiday</b></td>
 			</tr>
 		</table>
 		<form action="#" th:action="@{/admin/updateHoliday}"
@@ -55,11 +59,11 @@
 			<table>
 				<tbody>
 					<tr>
-						<td style="width: 138px; height: 55px; color: black; font-size: 16px; padding-left: 38px;">Name: </td>
+						<td style="width: 138px; height: 55px; color: black; font-size: 16px; padding-left: 38px;">Name of Holiday: </td>
 						<td><input type="text" th:value="*{name}" th:field="*{name}" style="width: 237px; height: 33px; background: white; border-radius: 4px; border: 1px black solid; text-align:center"/></td>
 					</tr>
 					<tr>
-						<td style="width: 138px; height: 55px; color: black; font-size: 16px; padding-left: 38px;">Holiday Start Date: </td>
+						<td style="width: 158px; height: 55px; color: black; font-size: 16px; padding-left: 38px;">Holiday Start Date: </td>
 						<td><input type="date" th:value="*{StartDate}" th:field="*{StartDate}" style="width: 237px; height: 33px; background: white; border-radius: 4px; border: 1px black solid; text-align:center"/></td>
 					</tr>
 					<tr>
@@ -68,14 +72,16 @@
 					</tr>
 					<tr>
 						<td style="width: 92px; height: 47px; color: black; font-size: 16px; padding-left: 75px">Description: </td>
-						<td><input type="text" th:value="*{Description}" th:field="*{description}" size="40" style="width: 235px; height: 33px; background: white; border-radius: 4px; border: 1px black solid"/></td>
+						<td><input type="text" th:value="*{Description}" th:field="*{description}" size="40" style="width: 235px; height: 33px; background: white; border-radius: 4px; border: 1px black solid; text-align:center"/></td>
 					</tr>
 					<tr>
-						<td><input type="hidden" th:value="*{id}" th:field="*{id}"/></td>
+						<td ><input name="selectedHolidayId" type="hidden" th:value="*{id}" th:field="*{id}"/></td>
+					</tr>
 						<td></td>
-						<td>
-							<input type="submit" value="Update Holiday" class="submit-button"/>
-							<input type="reset" value="Reset" class="submit-button"/>
+						<td style="padding-left: 24px">
+							<input type="submit" name="action" value="Update" class="submit-button"/>
+							
+							<button type="submit" name="action" value="Delete" class="delete-button">Delete</button>
 						</td>
 					</tr>
 				</tbody>

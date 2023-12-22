@@ -1,19 +1,26 @@
 package team8.laps.javaca.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import team8.laps.javaca.interfacemethods.StaffService;
 import team8.laps.javaca.model.Anual_Holiday;
 import team8.laps.javaca.model.Staff;
@@ -98,19 +105,34 @@ public class AdminController {
 	
 	//Update Annual holiday
 	@GetMapping("/updateHoliday")
-	public String updateHolidayForm(@RequestParam("selectedHolidayId") int holidayId, Model model) {
-//		int holidayId = Integer.parseInt(Id);
+	public String updateHolidayForm(@RequestParam("selectedHolidayId") int holidayId, Model model, HttpSession sessionObj){
 		Anual_Holiday updateHoliday = anualHolidayServiceImpl.findHolidayById(holidayId);
-		System.out.println("Found holiday" + updateHoliday);
+		
+		String username = (String)sessionObj.getAttribute("username");
+		model.addAttribute("username", username);
+		
 		model.addAttribute("updateHoliday", updateHoliday);
 		return "updateHoliday";
 	}
 	
-	//Post update holiday
+	//Post update or delete holiday
 	@PostMapping("/updateHoliday")
-	public String updateHoliday(@ModelAttribute("updateholiday") Anual_Holiday updateholiday) {
-		anualHolidayServiceImpl.updateAnualHoliday(updateholiday);
-		return "redirect:/holidayList";
+	public String updateHoliday(@ModelAttribute("updateholiday") Anual_Holiday updateholiday, 
+			@RequestParam(value="action") String action) {
+		//Get holiday id for deletion
+		int holidayId = updateholiday.getId();
+		
+		//Update Holiday
+		if(action.equals("Update")) {
+			anualHolidayServiceImpl.updateAnualHoliday(updateholiday);
+		}
+		
+		//Delete Holiday
+		if(action.equals("Delete")) {
+			anualHolidayServiceImpl.deleteHolidayById(holidayId);
+		}
+		
+		return "redirect:/admin/holidayList";
 	}
 	
 	//Add holiday object to form
@@ -127,7 +149,7 @@ public class AdminController {
 	@PostMapping("/addHoliday")
 	public String addHoliday(@ModelAttribute("addholiday")Anual_Holiday addholiday) {
 		anualHolidayServiceImpl.createAnualHoliday(addholiday);
-		return "admin";
+		return "redirect:/admin/holidayList";
 	}
 	
 	

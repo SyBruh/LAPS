@@ -37,10 +37,11 @@ public class AnualHolidayServiceImpl implements AnualHolidayService{
 		}
 		return getHoliday.get();
 	}
-
+	
+	
 	@Override
-	public void removeAnualHoliday(Anual_Holiday holiday) {
-		anualHolidayRepository.delete(holiday);
+	public void deleteAnualHolidaybyId(int id) {
+		anualHolidayRepository.deleteById(id);
 	}
 
 	@Override
@@ -71,6 +72,12 @@ public class AnualHolidayServiceImpl implements AnualHolidayService{
 	@Override
 	public Anual_Holiday findHolidayById(int id) {
 		return anualHolidayRepository.findHolidayById(id);
+	}
+
+	@Transactional
+	@Override
+	public void deleteHolidayById(int id) {
+		anualHolidayRepository.deleteHolidayById(id);		
 	}
 	
 	
