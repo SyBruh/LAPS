@@ -1,1 +1,48 @@
-//Staff
+<!--Staff-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+		<h3>Submit New Leave Application</h3>
+	<form action="#" th:action="@{/staff/submitLeave}"
+		th:object="${leaveApplied}" method="post">
+		<table>
+			<tbody>
+				<tr>
+					<label>Leave Type: </label>
+					<select name="leave_type_id" id="leave_type" th:field="*{leave_type_id}">
+						<option value="">--Select Leave Type--</option><!--To change ${leaveTypes} to what is going to be writeen in controller-->
+						<option th:each="leave_type: ${leaveTypes}" th:value="${leave_type.id}" th:text="${leave_type.LeaveType}"></option>
+					</select>
+				</tr>
+				<tr>
+					<td><span th:text="Leave Start Date"></span>Leave Start Date: </td>
+					<td><input type="date" th:value="*{leave_start}" th:field="*{leave_start}"/></td>
+				</tr>
+				<tr>
+					<td><span th:text="Leave End Date"></span>Leave End Date: </td>
+					<td><input type="date" th:value="*{leave_end}" th:field="*{leave_end}"/></td>
+				</tr>
+				<tr>
+					<td><span th:text="Comments"></span>Comments: </td>
+					<td><input type="text" th:field="*{comment}" size="40"/></td>
+				</tr>
+				<!--Hidden fields that are automatic generated-->
+				<tr>
+					<td><input type="hidden" th:field = "*{staff_id}" th:value="{staff_id}"/></td><!--Get staff id from sessions?-->
+				</tr>
+				<tr>
+					<td><input type="hidden" th:field="*{date_applied}" th:value="#{T(java.time.LocalDate).now()}"/></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<input type="submit" value="Submit Leave" class="submitLeave"/>
+						<input type="reset" value="Reset" class="submiLeave"/>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>

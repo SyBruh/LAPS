@@ -1,29 +1,105 @@
 <!DOCTYPE html>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="/css/role.css">
+
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+
 <head>
-  <title>Update Entitle Leave</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Update Entitle Leave</title>
+	
 </head>
+
 <body>
-  <h2>Update</h2>
-  <form action="#" th:action="@{/modifyLeave}" th:object="${leaveForm}" method="post">
-    <label for="leaveType">Choose the holiday type:</label>
-    <select id="leaveType" name="leaveType" th:field="*{leaveType}">
-      <option value="annualLeave">Annual leave</option>
-      <option value="medicalLeave">Medical leave</option>
-      <option value="compensationLeave">Compensation leave</option>
-    </select>
-    <br><br>
-    <label for="employeeType">Emplyee type:</label>
-    <select id="employeeType" name="employeeType" th:field="*{employeeType}">
-      <option value="admin">Admin</option>
-      <option value="professional">Professional</option>
-    </select>
-    <br><br>
-    <label for="leavePeriod">Length of the holiday:</label>
-    <input type="number" id="leavePeriod" name="leavePeriod" th:field="*{leavePeriod}" min="1">
-    <br><br>
- 
-    <input type="submit" value="提交">
-  </form>
+	<header>
+		<img class="logo-image" src="/images/laps1.svg" alt="Company logo">
+	</header>
+	
+	<div class="user-profile">
+	<span class="greeting">Hello, User</span>
+	</div>
+	
+	<div>
+
+		<div class="col-sm-3">
+			<ul class="nav flex-column">
+				<li class="nav-item" style="border-radius: 10px; background-color:#446dc6;">
+					<a class="nav-link active text-white-important h4 " aria-current="page" href="viewEmployee.html"
+							th:href="@{/manager/viewEmployee/1}">Add User</a>
+				</li>
+					<li class="nav-item">
+						<a class="nav-link text-info h4" href="#">Update Entitle Leave</a>
+					</li>
+				<li class="nav-item">
+						<a class="nav-link text-info h4" href="#">User List</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="col-sm-9 fill">
+    <h2>Update Entitle Leave</h2>
+
+    <!-- Form for handling Medical leave -->
+    <form action="#" th:action="@{/updateMedicalLeave}" method="post">
+        <h3>Medical Leave</h3>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <label for="leave_entitle">Length of the holiday:</label>
+                        <input type="number" id="leave_entitle1" name="leave_entitle_medical">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Update Medical Leave">
+                        <input type="reset" value="Reset">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <!-- Form for handling Annual leave with employee type -->
+    <form action="#" th:action="@{/updateAnnualLeave}" method="post">
+        <h3>Annual Leave with Employee Type</h3>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <label for="leave_entitle">Length of the holiday:</label>
+                        <input type="number" id="leave_entitle2" name="leave_entitle_annual">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="employeeType">Employee type:</label>
+                        <select id="employeeType" name="employeeType">
+                            <option value="Administrative">Administrative</option>
+                            <option value="Professional">Professional</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Update Annual Leave">
+                        <input type="reset" value="Reset">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
 </body>
 </html>

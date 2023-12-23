@@ -1,69 +1,79 @@
 package team8.laps.javaca.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
 public class User {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY) 
-private int id; 
-private String user_name; 
-private String password; 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	private int id; 
+	private String user_name; 
+	private String password; 
 
-@ManyToOne
-@JoinColumn(name="role_id")
-private Role role;
+	@ManyToMany
+	@JoinTable(name = "User_Role",
+	joinColumns = @JoinColumn(name = "user_id"),
+	inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private List<Role> roles;
 
-@OneToOne(mappedBy ="User")
-private Staff staff;
+	@OneToOne(mappedBy ="user")
+	private Staff staff;
 
-public User() {
+	public User() {
 
-} 
-public User(String user_name, String password) {
-this.user_name=user_name;
-this.password=password;
+	} 
+	public User(String user_name, String password) {
+		this.user_name=user_name;
+		this.password=password;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	public List<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+	public Staff getStaff() {
+		return staff;
+	}
+	public void setStaff(Staff staff) {
+		this.staff = staff;
+	}
+
+	
 }
-
-
-public String getPassword() {
-return password;
-}
-
-public void setPassword(String password) {
-this.password = password;
-}
-
-public String getUser_name() {
-return user_name;
-}
-
-public void setUser_name(String user_name) {
-this.user_name = user_name;
-}
-
-public int getId() {
-return id;
-}
-
-public void setId(int id) {
-this.id = id;
-}
-
-public Role getRole() {
-return role;
-}
-
-public void setRole(Role role) {
-this.role = role;
-} 
-}
-//as aaa
 
