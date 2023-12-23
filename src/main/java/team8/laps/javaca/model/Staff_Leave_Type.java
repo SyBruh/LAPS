@@ -29,7 +29,7 @@ public class Staff_Leave_Type {
 	private Staff staff;
 	//mapping to table "Leave_Type"
 	@ManyToOne
-	@JoinColumn(name="LeaveType_id")
+	@JoinColumn(name="Leave_Type_id")
 	private Leave_Type leavetype;
 	
 	

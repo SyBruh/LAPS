@@ -85,6 +85,7 @@ public class LeaveAppliedServiceImpl implements LeaveAppliedService{
 			la.setLeave_start(leaveApplied.getLeave_start());
 			la.setLeavetype(leaveApplied.getLeavetype());;
 			la.setStatus(leaveApplied.getStatus());
+			la.setLeavecount(leaveApplied.getLeavecount());
 			leaveAppliedRepository.save(la);
 		}		
 		return ola.get();
