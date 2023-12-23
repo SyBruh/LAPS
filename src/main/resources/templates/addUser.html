@@ -16,4 +16,81 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Admin Page</title>
+	<div class="col-sm-9 submitform-area">
+		<table>
+			<tr>
+				<td style="width: 400px; height: 55px; color: black; font-size: 24px; padding-left: 1px;">
+					<b>Add New User</b>
+				</td>
+			</tr>
+		</table>
+		<form action="#" th:action="@{/admin/addUser}" th:object="${staff}" method="post">
+			<table>
+				<tbody>
+					<tr>
+						<td>
+							<label> Staff Name </label>
+						</td>
+						<td>
+							<input type="text" th:field="*{staff_name}">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label> Designation </label>
+						</td>
+						<td>
+							<select th:field="*{designation}">
+								<option value="professional">Professional employee</option>
+								<option value="admininstrative">Admininstrative employee</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label> Manager Name</label>
+						</td>
+						<td>
+							<select th:field = "*{manager}">
+								<option th:each="user: ${managers}" th:value="${user.staff.id}"
+									th:text="${user.staff.staff_name}" style="text-align:center"></option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							user name
+						</td>
+						<td th:object="${user}">
+							<input type = "text" th:field = "*{user_name}">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							user password
+						</td>
+						<td th:object="${user}">
+							<input type = "text" th:field = "*{password}">
+						</td>
+					</tr>
+					<td>
+						<label>Roles</label>
+					</td>
+					<td th:object="${user}">
+						<div th:each="role : ${allroles}">
+							<input type="checkbox" th:field="*{roles}" th:value="${role.id}" id="${'role_' + role.id}">
+							<label th:for="${'role_' + role.id}" th:text="${role.role}"></label>
+						</div>
+					</td>
+					<tr>
+						<td></td>
+						<td>
+							<input type="submit" value="Save" class="submit-button" />
+							<input type="reset" value="Reset" class="submit-button" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
 </head>

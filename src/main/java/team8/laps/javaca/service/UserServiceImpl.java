@@ -47,5 +47,10 @@ public class UserServiceImpl implements UserService{
 		return userRepository.save(user);
 
 	}
+	@Override
+	public List<User> findManagers() {
+		// TODO Auto-generated method stub
+		return userRepository.findManagers();
+	}
 
 }

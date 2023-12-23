@@ -12,4 +12,5 @@ public interface RoleService {
 	List<Role> findIdByRole(String role);
 	List<Role> findRoleIById(int id);
 	void removeRole(Role role);
+	List<Role> findallroles();
 }

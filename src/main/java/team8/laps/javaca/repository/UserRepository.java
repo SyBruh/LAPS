@@ -22,6 +22,9 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 	//Find all users
 	@Query("SELECT u FROM User u")
 	public List<User> findAllUsers();
+	
+	@Query("Select DISTINCT u From User u Join u.roles r Where r.role = 'manager'")
+	public List<User> findManagers();
 
 }
 	

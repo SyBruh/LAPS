@@ -37,4 +37,16 @@ public class StaffServiceImpl implements StaffService{
 		return staffrepository.findLeaveByStaffId(id);
 	}
 
+	@Override
+	public void saveStaff(Staff staff) {
+		// TODO Auto-generated method stub
+		staffrepository.save(staff);
+	}
+
+	@Override
+	public List<Staff> getallStaff() {
+		// TODO Auto-generated method stub
+		return staffrepository.findAll();
+	}
+
 }

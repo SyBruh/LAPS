@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,10 +24,16 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import team8.laps.javaca.interfacemethods.StaffService;
 import team8.laps.javaca.model.Anual_Holiday;
+import team8.laps.javaca.model.Leave_Type;
+import team8.laps.javaca.model.Role;
 import team8.laps.javaca.model.Staff;
+import team8.laps.javaca.model.Staff_Leave_Type;
 import team8.laps.javaca.model.User;
 import team8.laps.javaca.repository.AnualHolidayRepository;
 import team8.laps.javaca.service.AnualHolidayServiceImpl;
+import team8.laps.javaca.service.LeaveTypeServiceImpl;
+import team8.laps.javaca.service.RoleServiceImpl;
+import team8.laps.javaca.service.StaffLeaveTypeServiceImpl;
 import team8.laps.javaca.service.StaffServiceImpl;
 import team8.laps.javaca.model.User;
 import team8.laps.javaca.service.UserServiceImpl;
@@ -40,17 +47,49 @@ public class AdminController {
   
    @Autowired
    private AnualHolidayServiceImpl anualHolidayServiceImpl;
+   
+   @Autowired 
+   private RoleServiceImpl roleServiceImpl;
+   
+   @Autowired
+   private StaffServiceImpl staffServiceImpl;
+   
+   @Autowired
+   private StaffLeaveTypeServiceImpl staffLeaveTypeServiceImpl;
+   
+   @Autowired
+   private LeaveTypeServiceImpl leaveTypeServiceImpl;
 
 	@GetMapping("/createUser")
 	public String addUserForm(Model model) {
 	    User user = new User();
 	    Staff staff = new Staff();
-	    
+	    List<User> managers = userServiceImpl.findManagers();
+	    List<Role> allroles = roleServiceImpl.findallroles();
 	    model.addAttribute("user", user);
 	    model.addAttribute("staff", staff);
+	    model.addAttribute("managers", managers);
+	    model.addAttribute("allroles", allroles);
 	    
 	    
 	    return "addUser"; 
+	}
+	
+	@PostMapping("/addUser")
+	public String SaveUser(@ModelAttribute("staff") Staff staff, @ModelAttribute("user") User user, Model model) {
+		staff.setUser(user);
+		userServiceImpl.updateUser(user);
+		staffServiceImpl.saveStaff(staff);
+		for(Leave_Type lt:leaveTypeServiceImpl.getAllLeaveType()) {
+			Staff_Leave_Type slt = new Staff_Leave_Type();
+			slt.setLeavetype(lt);
+			slt.setStaff(staff);
+			slt.setLeave_entitle(staffLeaveTypeServiceImpl.findleavetypebalance(lt).getLeave_entitle());
+			slt.setLeave_balance(staffLeaveTypeServiceImpl.findleavetypebalance(lt).getLeave_entitle());
+			staffLeaveTypeServiceImpl.addslt(slt);
+		}
+		
+		return "admin";
 	}
 	
 	//Add user will map with (/createUser)
@@ -62,8 +101,9 @@ public class AdminController {
 	 }
 	//UserList will map with (/viewUsers)
 	 @GetMapping("/userList")
-	 public String userListForm()
+	 public String userListForm(Model model)
 	 {
+		 model.addAttribute("staffs", staffServiceImpl.getallStaff());
 		 return "userList";
 	 }
 

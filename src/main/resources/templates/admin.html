@@ -31,13 +31,13 @@
 		<div class="col-sm-3">
 			<ul class="nav flex-column">
 				<li class="nav-item" style="border-radius: 10px; background-color:#446dc6;">
-					<a class="nav-link active text-white-important h4 " aria-current="page" href="addUser.html">Add User</a>
+					<a class="nav-link active text-white-important h4 " aria-current="page" href="addUser.html" th:href = "@{/admin/createUser}">Add User</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-info h4" href="updateEntitleLeave.html">Update Entitle Leave</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link text-info h4" href="userList.html">User List</a>
+					<a class="nav-link text-info h4" href="userList.html" th:href = "@{/admin/userList}">User List</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-info h4" th:href="@{/admin/holidayList}">Holiday List</a>

@@ -41,6 +41,12 @@ public class RoleServiceImpl implements RoleService{
 	@Override
 	public void removeRole(Role role) {
 		roleRepository.delete(role);		
+	}
+
+	@Override
+	public List<Role> findallroles() {
+		// TODO Auto-generated method stub
+		return roleRepository.findAll();
 	}	
 
 }

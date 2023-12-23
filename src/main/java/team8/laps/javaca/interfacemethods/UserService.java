@@ -11,4 +11,5 @@ public interface UserService {
 	List<Role> getroles(int id);
 	public List<User> findAllUsers();
 	User updateUser(User user);
+	List<User> findManagers();
 }
