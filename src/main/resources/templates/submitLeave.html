@@ -1,48 +1,108 @@
 <!--Staff-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout.html :: html_head"/>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" href="/css/role.css">
+	<link rel="stylesheet" href="/css/submitLeave.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+	<title>Submit Leave</title>
+</head>
+
 <body>
-		<h3>Submit New Leave Application</h3>
-	<form action="#" th:action="@{/staff/submitLeave}"
-		th:object="${leaveApplied}" method="post">
-		<table>
-			<tbody>
-				<tr>
-					<label>Leave Type: </label>
-					<select name="leave_type_id" id="leave_type" th:field="*{leave_type_id}">
-						<option value="">--Select Leave Type--</option><!--To change ${leaveTypes} to what is going to be writeen in controller-->
-						<option th:each="leave_type: ${leaveTypes}" th:value="${leave_type.id}" th:text="${leave_type.LeaveType}"></option>
-					</select>
-				</tr>
-				<tr>
-					<td><span th:text="Leave Start Date"></span>Leave Start Date: </td>
-					<td><input type="date" th:value="*{leave_start}" th:field="*{leave_start}"/></td>
-				</tr>
-				<tr>
-					<td><span th:text="Leave End Date"></span>Leave End Date: </td>
-					<td><input type="date" th:value="*{leave_end}" th:field="*{leave_end}"/></td>
-				</tr>
-				<tr>
-					<td><span th:text="Comments"></span>Comments: </td>
-					<td><input type="text" th:field="*{comment}" size="40"/></td>
-				</tr>
-				<!--Hidden fields that are automatic generated-->
-				<tr>
-					<td><input type="hidden" th:field = "*{staff_id}" th:value="{staff_id}"/></td><!--Get staff id from sessions?-->
-				</tr>
-				<tr>
-					<td><input type="hidden" th:field="*{date_applied}" th:value="#{T(java.time.LocalDate).now()}"/></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>
-						<input type="submit" value="Submit Leave" class="submitLeave"/>
-						<input type="reset" value="Reset" class="submiLeave"/>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
+	<header>
+		<img class="logo-image" src="/images/laps1.svg" alt="Company logo">
+	</header>
+	<div class="user-profile">
+		<span class="greeting">Hello, <span th:text="${username}"></span></span>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+
+			<div class="sidebar-container">
+				<div class="submit-sidebar">
+					<div class="col-md-12">
+						<ul class="nav-ul">
+							<li  th:if="${session.role} == 'manager'" class="nav-item" style="list-style: none;">
+								<a class="nav-link active text-white-important h4 " aria-current="page"
+									href="viewEmployee.html" th:href="@{/manager/viewEmployee/}+${session.staffid}">View
+									Employee</a>
+							</li>
+							<li style="list-style: none;">
+								<a class="nav-link" th:href="@{/staff/viewLeaveHistory}">Leave History</a>
+							</li>
+							</br>
+							<li style="list-style: none;">
+								<a class="nav-link-clicked" th:href="@{/staff/submitLeave}">Leave Apply</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-sm-9 submitform-area">
+					<table>
+						<tr>
+							<td style="width: 400px; height: 55px; color: black; font-size: 24px; padding-left: 1px;">
+								<b>Submit New Leave Application</b></td>
+						</tr>
+					</table>
+					<form action="#" th:action="@{/staff/submitLeave}" th:object="${leaveApplied}" method="post">
+						<table>
+							<tbody>
+								<tr>
+									<label
+										style="width: 95px; height: 52px; color: black; padding-left: 88px; font-size: 16px;">Leave
+										Type: </label>
+									<select th:field="*{leave_type_id}"
+										style="width: 241px; height: 33px; background: white; border-radius: 4px; border: 1px black solid">
+										<option value="" style="text-align:center">Select Leave Type</option>
+										<option th:each="leave_type: ${leave_types}" th:value="${leave_type.id}"
+											th:text="${leave_type.LeaveType}" style="text-align:center"></option>
+									</select>
+								</tr>
+								<tr>
+									<td
+										style="width: 138px; height: 55px; color: black; font-size: 16px; padding-left: 38px;">
+										Leave Start Date: </td>
+									<td><input type="date" th:value="*{leave_start}" th:field="*{leave_start}"
+											style="width: 237px; height: 33px; background: white; border-radius: 4px; border: 1px black solid; text-align:center" />
+									</td>
+								</tr>
+								<tr>
+									<td
+										style="width: 126px; height: 50px; color: black; font-size: 16px; padding-left: 45px">
+										Leave End Date: </td>
+									<td><input type="date" th:value="*{leave_end}" th:field="*{leave_end}"
+											style="width: 237px; height: 33px; background: white; border-radius: 4px; border: 1px black solid; text-align:center" />
+									</td>
+								</tr>
+								<tr>
+									<td
+										style="width: 92px; height: 47px; color: black; font-size: 16px; padding-left: 75px">
+										Comments: </td>
+									<td><input type="text" th:field="*{comment}" size="40"
+											style="width: 235px; height: 33px; background: white; border-radius: 4px; border: 1px black solid" />
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										<input type="submit" value="Submit Leave" class="submit-button" />
+										<input type="reset" value="Reset" class="submit-button" />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
 </body>
+
 </html>

@@ -1,3 +1,6 @@
+
+
+
 body {
     font-family: 'Montserrat', 'Arial Narrow';
     margin: 0;
@@ -59,7 +62,17 @@ header {
     padding:50px;
     
 }
+.icon{
+	width: 30px;
+	height: 30px;
+	margin-top: 3%;
+	margin-left:2%;
+}
 
+td{
+	font-size:10px;
+	text-align: center;
+}
 
 .fill{
     height: 800px;
@@ -68,6 +81,3 @@ header {
     align-self: center;
 }
 
-td{
-	font-size:10px;
-}

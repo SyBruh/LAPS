@@ -1,5 +1,6 @@
 package team8.laps.javaca.interfacemethods;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,8 @@ public interface LeaveAppliedService {
 	List<Leave_Applied> findLeaveByStaffId(int staff_id);
 	List<Leave_Applied> findLeaveStatus(String status);
 	List<Leave_Applied> findLeaveByDateApplied(Date date_applied);
-	void removeLeaveApplied(Leave_Applied leave);	
+	void removeLeaveApplied(Leave_Applied leave);
+	List<Leave_Applied> getLeaveApplied();
+	List<Leave_Applied> getLeaveAppliedbetween(LocalDate start,LocalDate end);
 
 }

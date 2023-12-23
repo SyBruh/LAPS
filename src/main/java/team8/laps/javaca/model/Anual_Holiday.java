@@ -2,9 +2,7 @@ package team8.laps.javaca.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,6 +30,10 @@ public class Anual_Holiday {
 	}
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	public LocalDate getStartDate() {
 		return StartDate;

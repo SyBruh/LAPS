@@ -1,5 +1,6 @@
 package team8.laps.javaca.repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,12 @@ public interface LeaveAppliedRepository extends JpaRepository<Leave_Applied, Int
 
 	@Query("Select la From Leave_Applied la Where id = :id")
 	public Leave_Applied getLeaveDetail(@Param("id") int id);
+	
+	@Query("Select la From Leave_Applied la Where la.status = 0 Or la.status = 1")
+	public List<Leave_Applied> getallleaveapplied();
+	
+	@Query("Select la From Leave_Applied la Where (la.status = 0 Or la.status = 1) AND ((la.leave_start Between :startdate And :enddate) OR (la.leave_end Between :startdate And :enddate))")
+	public List<Leave_Applied> getLeaveAppliedBetweendate(@Param("startdate") LocalDate start,@Param("enddate") LocalDate end);
 
 	//Find leave by Leave Applied Id
 	@Query("SELECT la FROM Leave_Applied la WHERE la.id = :id")

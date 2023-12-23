@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import team8.laps.javaca.interfacemethods.AnualHolidayService;
 import team8.laps.javaca.interfacemethods.LeaveAppliedService;
@@ -65,92 +67,47 @@ public class ManagerController {
 		return "viewEmployee";
 		
 	}
+	@GetMapping("/viewLeaveHistory/{staff_id}")// will change to HttpSession
+	public String ViewLeaveHistory(Model model, @PathVariable("staff_id") int id, HttpSession sessionobj) {
+		sessionobj.setAttribute("view", "manager");
+		model.addAttribute("leaveList", staffService.getLeaveHistory(id));
+		return "PersonalLeaveHistory";
+	}
+	//Leave Detail is (/viewDetail)
+//	@GetMapping("/viewDetail/{la_id}")
+//	public String ViewDetail(Model model, @PathVariable("la_id") int id){	
+//		model.addAttribute("Leave", leaveAppliedService.getLeaveDetail(id));
+//		return "leaveDetail";
+//	}
 	
 	@PostMapping("/updateStatus")
 	public String UpdateStatus(@ModelAttribute("Leave") Leave_Applied la,Model model) {
 		
-		if(la.getStatus() == LeaveStatusEnum.Approved) {
-			Integer leavecount = LeaveLogic(la.getLeave_start(),la.getLeave_end());
-			la.setLeavecount(leavecount);
-			Staff staff = la.getStaff();
-			for(Staff_Leave_Type slt:staff.getStaffleaves()) {
-				if(slt.getLeavetype().equals(la.getLeavetype())) {
-				int remainbalance = (int) (slt.getLeave_balance() - leavecount);
-				staffLeaveTypeService.updatebalance(remainbalance, la.getStaff().getId(), la.getLeavetype().getLeaveType());
+		leaveAppliedService.updateLeave(la);
+		if(la.getStatus().equals(LeaveStatusEnum.Rejected)){
+			Staff newstaff = la.getStaff();
+			for(Staff_Leave_Type slt:newstaff.getStaffleaves()) {
+				if(slt.getLeavetype() == la.getLeavetype()) {
+				int remainbalance = (int) (slt.getLeave_balance() + la.getLeavecount());
+				staffLeaveTypeService.updatebalance(remainbalance, la.getStaff().getId(), la.getLeavetype().getId());
 				}
 			}
 		}
-		leaveAppliedService.updateLeave(la);
 		
-		//staffLeaveTypeService.updatebalance(la.getLeavecount(), la.getStaff().getId(), la.getLeavetype().getLeaveType());
 		return "redirect:/staff/viewDetail/" + la.getId();
 	}
 	
-	public Integer LeaveLogic(LocalDate start, LocalDate end) {
-		Integer leavecount = null;
-		List<String> date = new ArrayList<String>();
-		date.add("Mon");
-		date.add("Tue");
-		date.add("Wed");
-		date.add("Thu");
-		date.add("Fri");
-		date.add("Sat");
-		date.add("Sun");
-		List<String> dateleaves = new ArrayList<String>();
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E");
-		Integer numberofleaves = (int) (ChronoUnit.DAYS.between(start, end) + 2);
-		String startday = dtf.format(start);
-		if(numberofleaves <= 14) {
-			dateleaves = recurDays(date,dateleaves,numberofleaves,startday);
-			leavecount = numberofleaves - getweekends(dateleaves) - getholiday(start,end);			
-			System.out.println(dateleaves);
-		}else {
-			leavecount = numberofleaves;
-		}
-		return leavecount;
+	@GetMapping("/ApplicationList")
+	public String ViewApplicationList(Model model, HttpSession sessionobj) {
+		sessionobj.setAttribute("view", "manager");
+		model.addAttribute("leaves", leaveAppliedService.getLeaveApplied());
+		return "leaveApplicationList";
 	}
 	
-	public List<String> recurDays(List<String> date,List<String> dateleaves, long limit, String startday){
-		if(dateleaves.size() < limit) {
-			for(String day :date) {
-				if(dateleaves.size() < limit) {
-					if(dateleaves.size() >= 1)
-					{
-						dateleaves.add(day);
-					}else {
-						if(day.equals(startday)) {
-							dateleaves.add(day);
-						}
-					}	
-				}
-							
-			}
-			return recurDays(date,dateleaves,limit,startday);
-		}
-		else {
-			return dateleaves;
-		}		
-	}
-	
-	public Integer getweekends(List<String> days) {
-		int count = 0;
-		for(String day: days ) {
-			if(day == "Sat" || day == "Sun") {
-				count++;
-			}
-		}
-		return count;
-	}
-	
-	public Integer getholiday(LocalDate StartDate,LocalDate EndDate) {
-		int count = 0;
-		List<Anual_Holiday> holidays = anualHolidayService.getholiday(StartDate, EndDate);
-		if(!holidays.isEmpty()) {
-			for(Anual_Holiday ah:holidays) {
-			count = (int) (count + ChronoUnit.DAYS.between(ah.getStartDate(), ah.getEndDate()) + 2);
-			}
-		}
-		return count;
+	@PostMapping("/ApplicationList")
+	public String viewApplicationList(@RequestParam("startdate") LocalDate start, @RequestParam("enddate") LocalDate end, Model model) {
+		model.addAttribute("leaves", leaveAppliedService.getLeaveAppliedbetween(start, end));
+		return "leaveApplicationList";
 	}
 }
 

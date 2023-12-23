@@ -1,0 +1,94 @@
+<!--Staff-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		
+		<link rel="stylesheet" href="/css/role.css">
+		<link rel="stylesheet" href="/css/submitLeave.css">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+		<title>Holiday List</title>
+	</head>
+<body>
+	<header>
+		<img class="logo-image" src="/images/laps1.svg" alt="Company logo">
+	</header>
+	<div class="user-profile">
+		<span class="greeting">Hello, <span th:text="${username}"></span></span>
+	</div>
+	<div class="container-fluid">
+	<div class="row">
+	
+	<div class="sidebar-container">
+	  <div class="submit-sidebar">
+	      <div class="col-md-12">
+	        <ul class="nav-ul">
+			  <li style="list-style: none;">
+				<a class="nav-link" th:href="@{/admin/updateEntitleLeave}">Update Entitle Leave</a>
+			  </li>
+			  <li style="list-style: none;">
+				 <a class="nav-link" th:href="@{/admin/viewUsers}">User List</a>
+			  </li>
+	          <li style="list-style: none;">
+				  <a class="nav-link-clicked" th:href="@{/admin/holidayList}">Holiday List</a>
+			  </li>
+			  <li style="list-style: none;">
+					<a class="nav-link"  th:href="@{/admin/addHoliday}">Add Holiday</a>
+			  </li>
+	        </ul>
+	    </div>
+    </div>
+
+	<div class="col-sm-9 submitform-area" >
+		<table>
+			<tr>
+				<td style="width: 400px; height: 55px; color: black; font-size: 24px; padding-left: 8px; text-align: left;"><b>Holiday List</b></td>
+			</tr>
+		</table>
+		<table>
+		    <thead>
+		      <tr>
+		        <th style="width: 154px; height: 38px; text-align: center; color: black; font-size: 20px; font-family: Roboto Condensed; font-weight: 400;">Holiday ID</th>
+		        <th style="width: 154px; height: 38px; text-align: center; color: black; font-size: 20px; font-family: Roboto Condensed; font-weight: 400;">Name</th>
+		        <th style="width: 95px; height: 52px; text-align: center; color: black; font-size: 20px; font-family: Roboto Condensed; font-weight: 400;">Start Date</th>
+		        <th style="width: 95px; height: 52px; text-align: center; color: black; font-size: 20px; font-family: Roboto Condensed; font-weight: 400;">End Date</th>
+		        <th style="width: 95px; height: 52px; text-align: center; color: black; font-size: 20px; font-family: Roboto Condensed; font-weight: 400;">Description</th>
+		        <th></th>
+		      </tr>
+		    </thead>
+		    <tbody>
+				<tr th:each="holiday:${holidays}">
+					<td type="hidden"th:text="${holiday.id}" style="font-size: 16px;"></td>
+					<td th:text="${holiday.name}" style="width: 254px; height: 31px; background: white; border-radius: 4px; border: 1px black solid; text-align: center; font-size: 14px;"></td>
+					<td th:text="${holiday.StartDate}" style="width: 156px; height: 31px; background: white; border-radius: 4px; border: 1px black solid; text-align: center ; font-size: 14px;"></td>
+					<td th:text="${holiday.EndDate}" style="width: 254px; height: 31px; background: white; border-radius: 4px; border: 1px black solid; text-align: center; font-size: 14px;"></td>
+					<td th:text="${holiday.Description}" style="width: 254px; height: 31px; background: white; border-radius: 4px; border: 1px black solid; text-align: center; font-size: 14px;"></td>
+					<td style="padding-left:10px"></td>
+				</tr>
+		    </tbody>
+		    
+  		</table>
+  		<br/>
+  	
+  		<form th:action="@{/admin/updateHoliday}" method="get">
+			  <tr>
+				  <td>
+			  		<label style="width: 95px; height: 52px; color: black; padding-left: 20px; padding-right: 10px; font-size: 16px;"><b>Update Holiday</b> </label>
+					<select name="selectedHolidayId" style="width: 241px; height: 33px; background: white; border-radius: 4px; border: 1px black solid">
+						<option th:each="holiday: ${holidays}" th:value="${holiday.id}" th:text="${holiday.id} + '. '+ ${holiday.name}" style="text-align:center"></option>
+					</select>
+					<input type="submit" value="Update Holiday" class="submit-button"/>
+				  </td>
+			  </tr>
+			  
+		</form>
+			
+	</div>
+	</div>
+	</div>
+</body>
+</html>

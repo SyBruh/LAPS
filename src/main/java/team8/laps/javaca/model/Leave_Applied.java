@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="Leave_Applied")
@@ -46,8 +47,11 @@ public class Leave_Applied {
 	
 	//Mappings
 	@ManyToOne 
-	@JoinColumn(name="leave_type_id")
+	@JoinColumn(name="leave_type_id",  insertable = false, updatable = false)
 	private Leave_Type leavetype;
+	
+	@Column(name="leave_type_id")
+	private Integer leavetype_id;
 	
 	@ManyToOne 
 	@JoinColumn(name="staff_id")
@@ -59,6 +63,7 @@ public class Leave_Applied {
 
 	public Leave_Applied(int id,LocalDate leave_start, LocalDate leave_end, LocalDate date_applied,
 			LeaveStatusEnum status, String comment, int leavecount) {
+
 		super();
 		this.id = id;
 		this.leave_start = leave_start;
@@ -73,6 +78,7 @@ public class Leave_Applied {
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -94,14 +100,9 @@ public class Leave_Applied {
 		return date_applied;
 	}
 	
-	public void setDate_applied(Object date_applied) {
-		if(date_applied instanceof String) {
-			this.date_applied = Stringtodate((String) date_applied);
-		}else if(date_applied instanceof LocalDate)
-		{
-			this.date_applied = (LocalDate) date_applied;
-		}
-		
+	public void setDate_applied(LocalDate date_applied) {
+		this.date_applied = date_applied;
+
 	}
 	
 	public LeaveStatusEnum getStatus() {
@@ -135,6 +136,15 @@ public class Leave_Applied {
 	public void setStaff(Staff staff) {
 		this.staff = staff;
 	}
+
+	public Integer getLeave_type_id() {
+		return leavetype_id;
+	}
+
+
+	public void setLeave_type_id(Integer leavetype_id) {
+		this.leavetype_id = leavetype_id;
+	}
 	
 	public LocalDate Stringtodate(String st) {
 		DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -145,7 +155,6 @@ public class Leave_Applied {
 	public Integer getLeavecount() {
 		return leavecount;
 	}
-
 
 	public void setLeavecount(Integer leavecount) {
 		this.leavecount = leavecount;

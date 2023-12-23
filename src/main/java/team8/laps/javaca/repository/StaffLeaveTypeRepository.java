@@ -10,6 +10,6 @@ import team8.laps.javaca.model.Staff_Leave_Type;
 public interface StaffLeaveTypeRepository extends JpaRepository<Staff_Leave_Type, Integer>{
 	
 	@Modifying
-	@Query("Update Staff_Leave_Type slt set slt.leave_balance = :leavebalance where slt.staff.id = :staff_id AND slt.leavetype.LeaveType = :leavetype")
-	public void UpdateLeaveBalance(@Param("leavebalance") int balance, @Param("staff_id") int staffid, @Param("leavetype") String leavetype);
+	@Query("Update Staff_Leave_Type slt set slt.leave_balance = :leavebalance where slt.staff.id = :staff_id AND slt.leavetype.id = :leavetypeid")
+	public void UpdateLeaveBalance(@Param("leavebalance") int balance, @Param("staff_id") int staffid, @Param("leavetypeid") int leavetype);
 }

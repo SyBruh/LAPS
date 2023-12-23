@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -89,6 +90,19 @@ public class LeaveAppliedServiceImpl implements LeaveAppliedService{
 			leaveAppliedRepository.save(la);
 		}		
 		return ola.get();
+	}
+
+	@Override
+	public List<Leave_Applied> getLeaveApplied() {
+		// TODO Auto-generated method stub
+		return leaveAppliedRepository.getallleaveapplied();
+	}
+
+	@Override
+	public List<Leave_Applied> getLeaveAppliedbetween(LocalDate start, LocalDate end) {
+		// TODO Auto-generated method stub
+		
+		return leaveAppliedRepository.getLeaveAppliedBetweendate(start, end);
 	}
 	
 }

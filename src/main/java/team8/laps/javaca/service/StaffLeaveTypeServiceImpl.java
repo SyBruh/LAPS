@@ -15,9 +15,9 @@ public class StaffLeaveTypeServiceImpl implements StaffLeaveTypeService{
 	private StaffLeaveTypeRepository staffLeaveTypeRepository;
 	@Override
 	@Transactional
-	public void updatebalance(int balance, int staffid, String leavetype) {
+	public void updatebalance(int balance, int staffid, int leavetypeid) {
 		// TODO Auto-generated method stub
-		staffLeaveTypeRepository.UpdateLeaveBalance(balance, staffid, leavetype);
+		staffLeaveTypeRepository.UpdateLeaveBalance(balance, staffid, leavetypeid);
 	}
 
 }

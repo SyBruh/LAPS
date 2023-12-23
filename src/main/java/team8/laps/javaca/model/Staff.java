@@ -3,6 +3,7 @@ package team8.laps.javaca.model;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +33,7 @@ public class Staff {
 	@OneToMany(mappedBy = "staff")
 	private List<Leave_Applied> applications;
 	
-	@OneToMany(mappedBy = "staff")
+	@OneToMany(mappedBy = "staff", fetch = FetchType.EAGER)
 	private List<Staff_Leave_Type> staffleaves;
 	
 	public Staff() {

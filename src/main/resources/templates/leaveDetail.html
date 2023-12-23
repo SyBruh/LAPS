@@ -16,7 +16,7 @@
 	<br />
 	<br />
 	<h2 style="text-align: center"> Product Details</h2>
-	<form action="#" th:object="${Leave}" method="post" th:action = "@{/manager/updateStatus}">
+	<form action="#" th:object="${Leave}" method="post" th:action = "${session.view == 'manager' ? '/manager/updateStatus' : '/staff/update'}">
 		<table style="width:50%; margin-left: auto; margin-right: auto;">
 			<tr>
 				<!--grey-->
@@ -31,7 +31,8 @@
 			</tr>
 			<tr>
 				<th>Start Date</th>
-				<td><input type="date" th:field="*{leave_start}" th:value="*{getLeave_start()}" readonly></td>
+				<td th:if="${session.view == 'staff' && session.permission == 'true'}"><input type="date" th:field="*{leave_start}" th:value="*{getLeave_start()}"></td>
+				<td th:if="${session.view == 'manager' || session.permission == 'false'}"><input type="date" th:field="*{leave_start}" th:value="*{getLeave_start()}" readonly></td>
 			</tr>
 			<tr>
 				<!--grey-->
@@ -41,12 +42,13 @@
 			</tr>
 			<tr>
 				<th>End Date</th>
-				<td><input type="date" th:field="*{leave_end}" th:value="*{getLeave_end()}" readonly></td>
+				<td th:if="${session.view == 'staff' && session.permission == 'true'}"><input type="date" th:field="*{leave_end}" th:value="*{getLeave_end()}"></td>
+				<td th:if="${session.view == 'manager' || session.permission == 'false'}"><input type="date" th:field="*{leave_end}" th:value="*{getLeave_end()}" readonly></td>
 			</tr>
 			<tr>
 				<!--grey-->
 			</tr>
-			<tr>
+			<tr th:if="${session.view == 'manager' && session.permission == 'true'}">
 				<th>Status</th>
 				<!--<td><input type="text" th:field="*{status}" th:value="*{getStatus()}"></td>-->
 				<td>
@@ -56,9 +58,18 @@
 					</select>
 				</td>
 			</tr>
+			<tr th:if="${session.view == 'staff' || session.permission == 'false'}">
+				<th>Status</th>
+				<td><input type = "text" th:field = "*{status}" th:value = "*{getStatus()}" readonly></td>
+			</tr>
 			<tr>
 				<th>Comment</th>
-				<td><input type="text" th:field="*{comment}" th:value="*{getComment()}"></td>
+				<td th:if="${session.permission == 'true'}"><input type="text" th:field="*{comment}" th:value="*{getComment()}"></td>
+				<td th:if = "${session.permission == 'false'}"><input type = "text" th:field = "*{comment}" th:value = "*{getComment()}"></td>
+			</tr>
+			<tr>
+				<th>Leave Count</th>
+				<td><input type="number" th:field="*{leavecount}" th:value="*{getLeavecount()}" readonly></td>
 			</tr>
 			<tr>
 				<th>Leave Type</th>
@@ -70,8 +81,14 @@
 			<tr>
 				<td>
 				</td>
-				<td>
-					<input type="submit" value="Update" />
+				<td th:if = "${session.permission == 'true'}">
+					<input type="submit" name = "action" value="Update" />
+				</td>
+				<td th:if = "${session.permission == 'true' && session.view == 'staff'}">
+					<input type="submit" name = "action" value="Delete" />
+				</td>
+				<td th:if = "${session.permission == 'false' && session.view == 'staff'}">
+					<input type="submit" name = "action" value="Cancel" />
 				</td>
 			</tr>
 		</table>
