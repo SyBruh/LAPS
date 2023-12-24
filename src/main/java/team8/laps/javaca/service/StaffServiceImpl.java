@@ -49,4 +49,16 @@ public class StaffServiceImpl implements StaffService{
 		return staffrepository.findAll();
 	}
 
+	@Override
+	public Staff findstaffbyID(int id) {
+		// TODO Auto-generated method stub
+		return staffrepository.findById(id).get();
+	}
+
+	@Override
+	public void deletestaff(int id) {
+		// TODO Auto-generated method stub
+		staffrepository.deleteById(id);
+	}
+
 }

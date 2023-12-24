@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import team8.laps.javaca.interfacemethods.StaffLeaveTypeService;
 import team8.laps.javaca.model.Leave_Type;
+import team8.laps.javaca.model.Staff;
 import team8.laps.javaca.model.Staff_Leave_Type;
 import team8.laps.javaca.repository.StaffLeaveTypeRepository;
 
@@ -27,9 +28,26 @@ public class StaffLeaveTypeServiceImpl implements StaffLeaveTypeService{
 		staffLeaveTypeRepository.save(slt);
 	}
 	@Override
-	public Staff_Leave_Type findleavetypebalance(Leave_Type lt) {
+	public Staff_Leave_Type findleavetypebalance(Leave_Type lt, String des) {
 		// TODO Auto-generated method stub
-		return staffLeaveTypeRepository.getleavetype(lt).get(0);
+		if(staffLeaveTypeRepository.getleavetype(lt,des) == null) {
+			return null;
+		}
+		return staffLeaveTypeRepository.getleavetype(lt,des).get(0);
+	}
+	@Override
+	public Staff_Leave_Type findanualLeave(Staff staff) {
+		// TODO Auto-generated method stub
+		return staffLeaveTypeRepository.getanualleavetype(staff);
+	}
+	@Override
+	public void updateentitle(int entitle, Leave_Type lt, String s) {
+		if(lt.getLeaveType().equalsIgnoreCase("Anual Leave")) {
+			staffLeaveTypeRepository.UpdatealAnualEntitle(entitle, lt, s);
+		}else {
+			staffLeaveTypeRepository.UpdatealOtherEntitle(entitle, lt);
+		}
+		
 	}
 
 }

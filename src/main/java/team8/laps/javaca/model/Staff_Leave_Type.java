@@ -74,6 +74,10 @@ public class Staff_Leave_Type {
 	public void setLeavetype(Leave_Type leavetype) {
 		this.leavetype = leavetype;
 	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 
 }

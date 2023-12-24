@@ -1,46 +1,72 @@
 <!--updateUser-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout.html :: html_head"/>
+
+
 <body>
-		<h3 style="font-family: Microsoft Sans Serif">Update User</h3>
-	<form action="#" th:action="@{/updateUser}"
-		th:object="${updateUser}" method="post">
+	<h3 style="font-family: Microsoft Sans Serif">Update User</h3>
+	<form action="#" th:action="@{/admin/updateUser}" th:object="${staff}" method="post">
 		<table>
 			<tbody>
-				<thead>
-				  <tr>
-					<th></th>
-					<th></th>
-				  </tr>
-				</thead>
-					<tr>
-						<td><span th:text="Employee Name" style="width: 138px; height: 55px; color: black; font-size: 20px"></span>Employee Name: </td>
-						<td><input type="text" th:field="${user.user_name}" th:value="${user.user_name}" size="40" style="width: 235px; height: 28px; background: white; border-radius: 4px; border: 1px black solid"/></td>
-					</tr>
-					<tr>
-						<td><label style="width: 95px; height: 52px; color: black; padding-left: 36px">User Type: </label></td>
-						<td>
-						  <select name="role_id" id="role_id" th:field="*{role_id}" style="width: 241px; height: 33px; background: white; border-radius: 4px; border: 1px black solid">
-							<option value="" style="text-align:center">Select Role Type</option>
-							<option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.role}"></option>
-						  </select>
-						  </td>
-					</tr>
-					<tr>
-						<td><span th:text="Password" style="width: 138px; height: 55px; color: black; font-size: 20px; padding-left: 38px"></span>Password: </td>
-						<td><input type="text" th:field="*{password}" th:value="*{password}" style="width: 235px; height: 28px; background: white; border-radius: 4px; border: 1px black solid"/></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>
-							<input type="submit" value="Update User" class="updateuser" style="width: 100px; height: 31px; background: white; border-radius: 4px; border: 1px black solid; text-align: center; color: black; font-size: 13px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)"/>
-							<input type="reset" value="Reset" class="updateuser" style="width: 100px; height: 31px; background: white; border-radius: 4px; border: 1px black solid; text-align: center; color: black; font-size: 13px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)"/>
-						</td>
-					</tr>
-				</tr>			
+				<tr>
+					<td>
+						<label> Staff Name </label>
+					</td>
+					<td>
+						<input type="hidden" th:field="*{id}" th:value = "*{id}">
+						<input type="text" th:field="*{staff_name}" th:value = "*{staff_name}">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label> Designation </label>
+					</td>
+					<td>
+						<select th:field="*{designation}" th:value = "*{designation}">
+							<option value="professional">Professional employee</option>
+							<option value="admininstrative">Admininstrative employee</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label> Manager Name</label>
+					</td>
+					<td>
+						<select th:if = "${manager != null}" th:field="*{manager}" th:value = "*{manager.staff_name}">
+							<option th:value = null></option>
+							<option th:each="user: ${managers}" th:value="${user.staff.id}"
+								th:text="${user.staff.staff_name}" style="text-align:center"></option>
+						</select>
+						<select th:if = "${manager == null}" th:field="*{manager}">
+							<option th:value = null></option>
+							<option th:each="user: ${managers}" th:value="${user.staff.id}"
+								th:text="${user.staff.staff_name}" style="text-align:center"></option>
+						</select>
+					</td>
+				</tr>
+				<td>
+					<label>Roles</label>
+				</td>
+				<td th:object="${user}">
+					<input type="hidden" th:field="*{id}" th:value = "*{id}">
+					<input type="hidden" th:field="*{user_name}" th:value = "*{user_name}">
+					<input type="hidden" th:field="*{password}" th:value = "*{password}">
+					<div th:each="role : ${allroles}">
+						<input type="checkbox" th:field="*{roles}" th:value="${role.id}" id="${'role_' + role.id}">
+						<label th:for="${'role_' + role.id}" th:text="${role.role}"></label>
+					</div>
+				</td>
+				<tr>
+					<td></td>
+					<td>
+						<input type="submit" value="Update" class="submit-button" />
+						<input type="reset" value="Reset" class="submit-button" />
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</form>
 </body>
+
 </html>

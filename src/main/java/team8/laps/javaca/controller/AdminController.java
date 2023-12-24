@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -84,8 +85,8 @@ public class AdminController {
 			Staff_Leave_Type slt = new Staff_Leave_Type();
 			slt.setLeavetype(lt);
 			slt.setStaff(staff);
-			slt.setLeave_entitle(staffLeaveTypeServiceImpl.findleavetypebalance(lt).getLeave_entitle());
-			slt.setLeave_balance(staffLeaveTypeServiceImpl.findleavetypebalance(lt).getLeave_entitle());
+			slt.setLeave_entitle(staffLeaveTypeServiceImpl.findleavetypebalance(lt,staff.getDesignation()).getLeave_entitle());
+			slt.setLeave_balance(staffLeaveTypeServiceImpl.findleavetypebalance(lt,staff.getDesignation()).getLeave_entitle());
 			staffLeaveTypeServiceImpl.addslt(slt);
 		}
 		
@@ -94,10 +95,29 @@ public class AdminController {
 	
 	//Add user will map with (/createUser)
 	//Update Entitle will map with (updateEntitle)
-	 @GetMapping("/updateEntitleLeave")
-	 public String updateEntitleLeaveForm()
+	@GetMapping("/leaveTypeList")
+	public String LeaveTypeList(Model model) {
+		model.addAttribute("leavetypes", leaveTypeServiceImpl.getAllLeaveType());
+		return "leavetypeList";
+	}
+	 @GetMapping("/updateEntitleLeave/{id}")
+	 public String updateEntitleLeaveForm(Model model, @PathVariable("id") int id)
 	 {
+		 
+		 Leave_Type lt = leaveTypeServiceImpl.getleavetypebyID(id);
+		 if(lt.getLeaveType().equals("Anual Leave")) {
+			 model.addAttribute("anual","true");
+		 }else {
+			 model.addAttribute("anual","false");
+		 }
+		 model.addAttribute("leavetype", lt);
+		 model.addAttribute("entitle", staffLeaveTypeServiceImpl.findleavetypebalance(lt,"professional").getLeave_entitle());
 		 return "updateEntitleLeave";
+	 }
+	 @PostMapping("/updateEntitleLeave")
+	 public String updateEntitleLeaveForm(@ModelAttribute("leavetype") Leave_Type lt, @RequestParam("leave_entitle") int entitle, @RequestParam("employeeType") String desgination) {
+		 staffLeaveTypeServiceImpl.updateentitle(entitle, lt, desgination);
+		 return "redirect:/admin/leaveTypeList";
 	 }
 	//UserList will map with (/viewUsers)
 	 @GetMapping("/userList")
@@ -118,18 +138,35 @@ public class AdminController {
 	
 	//Update User will (/updateUser)
 	//Bind User object to form model
-	@GetMapping("/updateUser")
-	public String updateUserForm(Model model) {
-		User updateUser = new User();
-		model.addAttribute("updateUser", updateUser);
+	@GetMapping("/updateUser/{id}")
+	public String updateUserForm(Model model,@PathVariable("id") int staffid) {
+		Staff staff = staffServiceImpl.findstaffbyID(staffid);
+		User user = staff.getUser();
+		List<User> managers = userServiceImpl.findManagers();
+		List<Role> allroles = roleServiceImpl.findallroles();
+		model.addAttribute("user", user);
+		model.addAttribute("staff", staff);
+		model.addAttribute("managers", managers);
+		model.addAttribute("allroles", allroles);
 		return "updateUser";
 	}
-	
+	@GetMapping("/deleteUser/{id}")
+	public String deleteUser(Model model,@PathVariable("id") int staffid) {
+		staffServiceImpl.deletestaff(staffid);
+		return "redirect:/admin/userList";
+	}
 	//POST update user
 	@PostMapping("/updateUser")
-	public String updateUser(@ModelAttribute("updateUser")User updateUser) {
-		userServiceImpl.updateUser(updateUser);
-		return "redirect:/userList";
+	public String updateUser(@ModelAttribute("staff") Staff staff, @ModelAttribute("user") User user) {
+		staff.setUser(user);
+		userServiceImpl.updateUser(user);
+		staffServiceImpl.saveStaff(staff);
+		Staff_Leave_Type slt = staffLeaveTypeServiceImpl.findanualLeave(staff);
+		Integer balance = staffLeaveTypeServiceImpl.findleavetypebalance(slt.getLeavetype(),staff.getDesignation()).getLeave_entitle();
+		slt.setLeave_entitle(balance);
+		staffLeaveTypeServiceImpl.addslt(slt);
+		
+		return "redirect:/admin/userList";
 	}
 	
 	//View holiday list

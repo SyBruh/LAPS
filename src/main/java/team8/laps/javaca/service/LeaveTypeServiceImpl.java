@@ -22,4 +22,10 @@ public class LeaveTypeServiceImpl implements LeaveTypeService{
 		return leaveTypeRepository.findAll();
 	}
 
+	@Override
+	public Leave_Type getleavetypebyID(int id) {
+		// TODO Auto-generated method stub
+		return leaveTypeRepository.findById(id).get();
+	}
+
 }

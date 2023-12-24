@@ -10,4 +10,6 @@ public interface StaffService {
   List<Leave_Applied> getLeaveHistory(int id);
   void saveStaff(Staff staff);
 	List<Staff> getallStaff();
+	Staff findstaffbyID(int id);
+	void deletestaff(int id);
 }

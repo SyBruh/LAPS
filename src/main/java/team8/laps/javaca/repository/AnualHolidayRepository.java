@@ -15,7 +15,7 @@ public interface AnualHolidayRepository extends JpaRepository<Anual_Holiday,Inte
 	public List<Anual_Holiday> getholiday(@Param("StartDate") LocalDate StartDate, @Param("EndDate") LocalDate EndDate);
 
 	@Query("Select ah From Anual_Holiday ah Where ah.StartDate <= :Date And ah.EndDate >= :Date")
-	public Anual_Holiday checkholiday(@Param("Date") LocalDate date);
+	public List<Anual_Holiday> checkholiday(@Param("Date") LocalDate date);
 	//Find All Holiday
 	@Query("SELECT ah FROM Anual_Holiday ah")
 	public List<Anual_Holiday> findAllHoliday();

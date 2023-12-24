@@ -84,4 +84,7 @@ public class Staff {
 	public void setStaffleaves(List<Staff_Leave_Type> staffleaves) {
 		this.staffleaves = staffleaves;
 	}
+	public void setId(int id) {
+		this.id = id;
+	}
 }
