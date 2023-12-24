@@ -1,9 +1,61 @@
 <!--updateUser-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="/css/role.css">
+
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
 
 <body>
+	<header>
+		<img class="logo-image" src="/images/laps1.svg" alt="Company logo">
+		<div class="user-profile">
+			<span class="greeting">Hello, Admin</span>
+		</div>
+	</header>
+	<div>
+
+		<div class="col-sm-3">
+			<ul class="nav flex-column">
+				<li class="nav-item" style="border-radius: 10px; background-color:#446dc6;">
+					<a class="nav-link active text-white-important h4 " aria-current="page" href="addUser.html" th:href = "@{/admin/createUser}">Add User</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-info h4" href="updateEntitleLeave.html" th:href = "@{/admin/leaveTypeList}">Leave Type List</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-info h4" href="userList.html" th:href = "@{/admin/userList}">User List</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-info h4" th:href="@{/admin/holidayList}">Holiday List</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-info h4" th:href="@{/admin/addHoliday}">Add Holiday</a>
+				</li>
+
+			</ul>
+		</div>
+		<div class="col-sm-9 fill">
+
+			<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Page</title>
+	<div class="col-sm-9 submitform-area">
+		<div class"col-sm-2">
+				<a href="#"
+							onclick="history.go(-1); return false;">
+					<img class="icon" src="/images/back.svg" alt="SVG Icon">
+				</a>
+			</div>
+
+			<h3 style="text-align: center;margin-bottom: 15px;margin-top: 5px;">Update User</h3>
 	<h3 style="font-family: Microsoft Sans Serif">Update User</h3>
 	<form action="#" th:action="@{/admin/updateUser}" th:object="${staff}" method="post">
 		<table>

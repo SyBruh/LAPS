@@ -27,7 +27,7 @@
 	<div class="user-profile">
 
 
-		<span class="greeting" th:text="Hello + ${session.staffname}"> </span>
+		<span class="greeting" th:text="'Hello ' + ${session.staffname}"> </span>
 
 	</div>
 	<div>
@@ -43,9 +43,11 @@
 						th:href="@{staff/viewLeaveHistory/} + ${session.staffid}">Leave History</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link text-info h4" href="submitLeave.html" th:href="@{/staff/submitLeave}">Leave Apply</a>
+					<a class="nav-link text-info h4" href = "PersonalLeaveHistory.html" th:href = "@{/staff/viewLeaveHistory/} + ${session.staffid}">Leave History</a>
 				</li>
-
+				<li class="nav-item">
+					<a class="nav-link text-info h4" href="submitLeave.html" th:href = "@{/staff/submitLeave}">Leave Apply</a>
+				</li>
 			</ul>
 		</div>
 		<div class="col-sm-9 fill">

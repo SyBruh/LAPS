@@ -28,23 +28,27 @@
 		<div>
 			<div class="col-sm-3">
 				<ul class="nav flex-column">
-					<li class="nav-item">
-						<a class="nav-link active text-info h4 " aria-current="page" href="viewEmployee.html"
-							th:href="@{/manager/viewEmployee/1}">View Employee</a>
-					</li>
-					<li class="nav-item" style="border-radius: 10px; background-color:#446dc6;">
-						<a class="nav-link active text-white-important h4" href="leaveApplicationList.html"
-							th:href="@{/manager/ApplicationList}">Leave Application List</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-info h4" aria-current="page" href="viewEmployee.html">Leave Apply</a>
-					</li>
+				<li class="nav-item" th:if = "${session.role == 'admin'}">
+					<a class="nav-link text-info h4" aria-current="page" href="viewEmployee.html"
+						th:href="@{/manager/viewEmployee/}+${session.staffid}">View Employee</a>
+				</li>
+				<li class="nav-item" th:if = "${session.role == 'admin'}" style="border-radius: 10px; background-color:#446dc6;">
+					<a class="nav-link active text-white-important h4" href="leaveApplicationList.html"
+						th:href="@{/manager/ApplicationList}">Application List</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-info h4" href = "PersonalLeaveHistory.html" th:href = "@{/staff/viewLeaveHistory/} + ${session.staffid}">Leave History</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-info h4" href="submitLeave.html" th:href = "@{/staff/submitLeave}">Leave Apply</a>
+				</li>
 
-				</ul>
+			</ul>
 			</div>
 			<div class="col-sm-9 fill">
 				<div class"col-sm-2">
-					<a href="viewEmployee.html">
+					<a href="#"
+							onclick="history.go(-1); return false;">
 						<img class="icon" src="/images/back.svg" alt="SVG Icon">
 					</a>
 				</div>
