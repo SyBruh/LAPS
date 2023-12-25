@@ -92,10 +92,11 @@ public class AnualHolidayServiceImpl implements AnualHolidayService{
 	@Override
 	public boolean checkHoliday(LocalDate date) {
 		// TODO Auto-generated method stub
-		if(anualHolidayRepository.checkholiday(date) != null) {
-			return false;
+		List<Anual_Holiday> lah = anualHolidayRepository.checkholiday(date);
+		if(lah.isEmpty()) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 }

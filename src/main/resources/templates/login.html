@@ -90,8 +90,12 @@
   </style>
 </head>
 <body>
-
 <div class="login-container">
+	<!--New Code line-->
+	<h3 style = "color: red;" th:if = "${session.error != null}">
+		<span th:text = "${session.error}"></span>
+	</h3>
+	<!--New Code line-->
   <div class="tabs">
     <div id = "staff-h" class="tab active-tab" onclick="showTab('staff')">Staff</div>
     <div id = "admin-h" class="tab" onclick="showTab('admin')">Admin</div>

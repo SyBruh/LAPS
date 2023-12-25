@@ -51,6 +51,7 @@ public class LoginController {
 		}
 		User rluser = userService.userAuthentication(user.getUser_name(), user.getPassword());
 		if(rluser != null) {
+			sessionobj.removeAttribute("error");
 			sessionobj.setAttribute("staff", rluser.getStaff());
 			sessionobj.setAttribute("staffid", rluser.getStaff().getId()); 
 			sessionobj.setAttribute("username", rluser.getUser_name());
@@ -69,6 +70,7 @@ public class LoginController {
 				return "staff";
 			}
 		}else {
+			sessionobj.setAttribute("error", "Authentication Failed");//New Code
 			return "login";
 		}
 

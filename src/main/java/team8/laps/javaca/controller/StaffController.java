@@ -91,6 +91,7 @@ public class StaffController {
 			@RequestParam("action") String action, Model model, HttpSession sessionobj) {
 		if ("Update".equals(action)) {
 			if (!checkdates(leave_applied.getLeave_start(), leave_applied.getLeave_end())) {
+				sessionobj.setAttribute("error", "Dates should not fall on holidays");// New Code
 				return "redirect:/staff/viewDetail/" + leave_applied.getId();
 			}
 			// Setting user id
@@ -111,13 +112,14 @@ public class StaffController {
 				if (slt.getLeavetype() == leave_applied.getLeavetype()) {
 					int remainbalance = (int) (slt.getLeave_balance() - leavecount + oldleavecount);
 					if (remainbalance < 0) {
+						sessionobj.setAttribute("error", "You don't have necessary amount of leaves left for the application");// New Code
 						return "redirect:/staff/viewDetail/" + leave_applied.getId();
 					}
 					staffLeaveTypeService.updatebalance(remainbalance, leave_applied.getStaff().getId(),
 							leave_applied.getLeavetype().getId());
 				}
 			}
-
+			sessionobj.removeAttribute("error");//New COde
 			leaveAppliedservice.updateLeave(leave_applied);
 			return "redirect:/staff/viewDetail/" + leave_applied.getId();
 		} else if ("Delete".equals(action)) {
@@ -204,7 +206,8 @@ public class StaffController {
 	public String createSubmitLeave(@ModelAttribute("leaveApplied") Leave_Applied leave_applied,
 			HttpSession sessionObj) {
 		if (!checkdates(leave_applied.getLeave_start(), leave_applied.getLeave_end())) {
-			return "submitLeave";
+			sessionObj.setAttribute("error", "Dates should not fall on holidays");// New Code
+			return "redirect:/staff/submitLeave";
 		}
 		// Setting user id
 		Staff staff = (Staff) sessionObj.getAttribute("staff");
@@ -224,13 +227,15 @@ public class StaffController {
 			if (slt.getLeavetype().getId() == leave_applied.getLeave_type_id()) {
 				int remainbalance = (int) (slt.getLeave_balance() - leavecount);
 				if (remainbalance < 0) {
+					sessionObj.setAttribute("error", "You don't have necessary amount of leaves left for the application");// New Code
 					return "redirect:/staff/submitLeave";
 				}
 				staffLeaveTypeService.updatebalance(remainbalance, leave_applied.getStaff().getId(),
 						leave_applied.getLeave_type_id());
 			}
 		}
-
+		
+		sessionObj.removeAttribute("error");//New COde
 		leaveAppliedservice.createLeave(leave_applied);
 		return "staff";
 	}
@@ -294,7 +299,7 @@ public class StaffController {
 		List<Anual_Holiday> holidays = anualHolidayService.getholiday(StartDate, EndDate);
 		if (!holidays.isEmpty()) {
 			for (Anual_Holiday ah : holidays) {
-				count = (int) (count + ChronoUnit.DAYS.between(ah.getStartDate(), ah.getEndDate()) + 2);
+				count = (int) (count + ChronoUnit.DAYS.between(ah.getStartDate(), ah.getEndDate()) + 1);
 			}
 		}
 		return count;
