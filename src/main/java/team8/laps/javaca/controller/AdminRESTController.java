@@ -1,5 +1,7 @@
 package team8.laps.javaca.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import team8.laps.javaca.model.Role;
 import team8.laps.javaca.model.Staff;
 import team8.laps.javaca.model.Staff_Leave_Type;
 import team8.laps.javaca.model.User;
+import team8.laps.javaca.model.UserStaffDTO;
 import team8.laps.javaca.service.AnualHolidayServiceImpl;
 import team8.laps.javaca.service.LeaveTypeServiceImpl;
 import team8.laps.javaca.service.RoleServiceImpl;
@@ -54,16 +57,27 @@ public class AdminRESTController {
    private LeaveTypeServiceImpl leaveTypeServiceImpl;
 
 	@GetMapping("/getmanagers")
-	public List<User> getManagers(){
-		return userServiceImpl.findManagers();
+	public List<String> getManagers(){
+		List<User> managers = userServiceImpl.findManagers();
+		List<String> manager = new ArrayList<String>();
+		for(User m : managers) {
+			manager.add(m.getStaff().getStaff_name());
+		}
+		return manager;
 	}
 	@GetMapping("/getroles")
-	public List<Role> getRoles(){
-		return roleServiceImpl.findallroles();
+	public List<String> getRoles(){
+		List<Role> roles = roleServiceImpl.findallroles();
+		List<String> role = new ArrayList<String>();
+		for(Role r : roles) {
+			role.add(r.getRole());
+		}
+		return role;
 	}
 	
 	@PostMapping("/addUser")
-	public ResponseEntity<User> SaveUser(@RequestBody Staff staff, @RequestBody User user) {
+	public ResponseEntity<String> SaveUser(@ModelAttribute Staff staff,
+	        @ModelAttribute User user) {
 		 try {
 			 staff.setUser(user);
 				userServiceImpl.updateUser(user);
@@ -76,9 +90,9 @@ public class AdminRESTController {
 					slt.setLeave_balance(staffLeaveTypeServiceImpl.findleavetypebalance(lt,staff.getDesignation()).getLeave_entitle());
 					staffLeaveTypeServiceImpl.addslt(slt);
 				}
-			  return new ResponseEntity<User>(user,HttpStatus.CREATED);
+			  return new ResponseEntity<String>("created",HttpStatus.CREATED);
 		  }catch(Exception e) {
-			  return new ResponseEntity<User>(HttpStatus.EXPECTATION_FAILED);
+			  return new ResponseEntity<String>("Not good",HttpStatus.EXPECTATION_FAILED);
 		  }	
 	}
 	
@@ -86,7 +100,8 @@ public class AdminRESTController {
 	//Update Entitle will map with (updateEntitle)
 	@GetMapping("/leaveTypeList")
 	public List<Leave_Type> LeaveTypeList() {	
-		return leaveTypeServiceImpl.getAllLeaveType();
+		List<Leave_Type> lts = leaveTypeServiceImpl.getAllLeaveType();
+		return lts;
 	}
 	 @GetMapping("/updateEntitleLeave/{id}")
 	 public Leave_Type GetLeaveType(@PathVariable("id") int id)
@@ -94,21 +109,32 @@ public class AdminRESTController {
 		 Leave_Type lt = leaveTypeServiceImpl.getleavetypebyID(id);
 		 return lt;
 	 }
-	 @GetMapping("/getbalance")
-	 public Integer GetLeaveTypeBalance(@RequestBody Leave_Type lt) {
+	 @GetMapping("/getbalance/{id}")
+	 public Integer GetLeaveTypeBalance(@PathVariable("id") int id) {
+		 Leave_Type lt = leaveTypeServiceImpl.getleavetypebyID(id);
 		 return staffLeaveTypeServiceImpl.findleavetypebalance(lt,"professional").getLeave_entitle();
 	 }
 	 
-	 @PutMapping("/updateEntitleLeave")
-	 public ResponseEntity<Leave_Type> updateEntitleLeaveForm(@RequestBody Leave_Type lt, @RequestParam("leave_entitle") int entitle, @RequestParam("employeeType") String desgination) {
+	 @PutMapping("/updateEntitleLeave/{id}")
+	 public void updateEntitleLeaveForm(@PathVariable("id") int id, @RequestParam("leave_entitle") int entitle, @RequestParam("employeeType") String desgination) {
+		 Leave_Type lt = leaveTypeServiceImpl.getleavetypebyID(id);
 		 staffLeaveTypeServiceImpl.updateentitle(entitle, lt, desgination);
-		 return new ResponseEntity<Leave_Type>(lt,HttpStatus.OK);
 	 }
 	//UserList will map with (/viewUsers)
 	 @GetMapping("/userList")
-	 public List<Staff> userListForm(Model model)
+	 public List<HashMap<String,Object>> userListForm()
 	 {
-		 return staffServiceImpl.getallStaff();
+		 List<Staff> staffs = staffServiceImpl.getallStaff();	 
+		 List<HashMap<String,Object>> returnthings = new ArrayList<>();
+		 for(Staff s:staffs) {
+			 HashMap<String,Object> staff = new HashMap<String,Object>();
+			 staff.put("id", s.getId());
+			 staff.put("staff_name", s.getStaff_name());
+			 staff.put("designation", s.getDesignation());
+			 returnthings.add(staff);
+		 }
+		 return returnthings;
+		 //return staffServiceImpl.getallStaff();
 	 }
 
 	
@@ -120,8 +146,8 @@ public class AdminRESTController {
 		return staffServiceImpl.findstaffbyID(staffid);
 	}
 	@GetMapping("/getuser")
-	public User updateUserForm(@RequestBody Staff staff ) {
-		return staff.getUser();
+	public User getuser(@PathVariable("id") int id) {
+		return staffServiceImpl.findstaffbyID(id).getUser();
 	}
 	
 	
@@ -134,7 +160,8 @@ public class AdminRESTController {
 	
 	//POST update user
 	@PutMapping("/updateUser")
-	public ResponseEntity<User> updateUser(@RequestBody Staff staff, @RequestBody User user) {
+	public ResponseEntity<User> updateUser(@ModelAttribute Staff staff,
+	        @ModelAttribute User user) {
 		try {
 			staff.setUser(user);
 			userServiceImpl.updateUser(user);

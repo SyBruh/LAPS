@@ -6,6 +6,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,6 +50,7 @@ public class Leave_Applied {
 	//Mappings
 	@ManyToOne 
 	@JoinColumn(name="leave_type_id",  insertable = false, updatable = false)
+	@JsonIgnore
 	private Leave_Type leavetype;
 	
 	@Column(name="leave_type_id")
@@ -55,6 +58,7 @@ public class Leave_Applied {
 	
 	@ManyToOne 
 	@JoinColumn(name="staff_id")
+	@JsonIgnore
 	private Staff staff;
 	
 	//Constructors

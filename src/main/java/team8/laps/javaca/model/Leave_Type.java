@@ -2,6 +2,8 @@ package team8.laps.javaca.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,9 +19,11 @@ public class Leave_Type {
 	private String LeaveType;
 
 	@OneToMany(mappedBy = "leavetype")
+	@JsonIgnore
 	private List<Staff_Leave_Type> staffleaves;
 
 	@OneToMany(mappedBy = "leavetype")
+	@JsonIgnore
 	private List<Leave_Applied> applications;
 
 	public Leave_Type() {

@@ -4,6 +4,8 @@ package team8.laps.javaca.model;
 //import javax.persistence.GenerationType;
 //import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,10 +28,12 @@ public class Staff_Leave_Type {
 	//mapping to table "Staff"
 	@ManyToOne
 	@JoinColumn(name="staff_id")
+	@JsonIgnore
 	private Staff staff;
 	//mapping to table "Leave_Type"
 	@ManyToOne
 	@JoinColumn(name="Leave_Type_id")
+	@JsonIgnore
 	private Leave_Type leavetype;
 	
 	

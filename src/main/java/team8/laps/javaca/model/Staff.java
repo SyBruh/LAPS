@@ -2,6 +2,8 @@ package team8.laps.javaca.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,12 +30,15 @@ public class Staff {
 	
 	@ManyToOne
 	@JoinColumn(name = "manager_id")
+	@JsonIgnore
 	private Staff manager;
 	
 	@OneToMany(mappedBy = "staff")
+	@JsonIgnore
 	private List<Leave_Applied> applications;
 	
 	@OneToMany(mappedBy = "staff", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private List<Staff_Leave_Type> staffleaves;
 	
 	public Staff() {

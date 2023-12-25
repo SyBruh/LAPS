@@ -2,6 +2,8 @@ package team8.laps.javaca.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,12 +25,14 @@ public class User {
 	private String password; 
 
 	@ManyToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	@JoinTable(name = "User_Role",
 	joinColumns = @JoinColumn(name = "user_id"),
 	inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
 
 	@OneToOne(mappedBy ="user")
+	@JsonIgnore
 	private Staff staff;
 
 	public User() {
